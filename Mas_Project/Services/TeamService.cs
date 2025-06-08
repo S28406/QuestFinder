@@ -42,21 +42,17 @@ public class TeamService
         return team;
     }
 
-    public async Task AddMemberToTeamAsync(Guid teamId, Guid memberId)
+    public async Task AddMemberToTeamAsync(Guid teamId, Guid managerId, Guid memberId)
     {
-        var manager = await _memberRepo.GetByIdAsync(memberId);
+        var manager = await _memberRepo.GetByIdAsync(managerId);
+        var member = await _memberRepo.GetByIdAsync(memberId);
+        var team = await _teamRepo.GetByIdAsync(teamId);
 
-        if (manager == null)
-            throw new ArgumentException("Member not found.");
+        if (manager == null || member == null || team == null)
+            throw new ArgumentException("Team or member not found.");
 
         if (manager.MemberRole != MemberRole.GuildManager)
-            throw new InvalidOperationException("Only a Guild Manager can create teams.");
-        
-        var team = await _teamRepo.GetByIdAsync(teamId);
-        var member = await _memberRepo.GetByIdAsync(memberId);
-
-        if (team == null || member == null)
-            throw new ArgumentException("Team or member not found.");
+            throw new InvalidOperationException("Only a Guild Manager can add members to teams.");
 
         team.AddMember(member);
         await _teamRepo.UpdateAsync(team);
