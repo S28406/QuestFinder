@@ -24,4 +24,17 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Immages\EldoriaForest.png" />
+    <Resource Include="Images\EldoriaForest.png" />
+    <None Remove="Immages\IronpeakMountains.png" />
+    <Resource Include="Images\IronpeakMountains.png" />
+    <None Remove="Immages\SilverstreamCity.png" />
+    <Resource Include="Images\SilverstreamCity.png" />
+    <None Remove="Immages\UnnamedValley.png" />
+    <Resource Include="Images\UnnamedValley.png" />
+    <None Remove="Immages\WhisperingCaves.png" />
+    <Resource Include="Images\WhisperingCaves.png" />
+  </ItemGroup>
+
 </Project>

@@ -83,9 +83,6 @@ namespace Mas_Project.Data
             modelBuilder.Entity<DateTaken>().HasKey(dt => new {dt.GuildMemberId, dt.QuestId});
             modelBuilder.Entity<DateUnlocked>().HasKey(dt => new {dt.GuildMemberId, dt.AchievementId});
 
-            // === Optional: Discriminator for User subclasses (TPH) ===
-            modelBuilder.Entity<GuildMember>().HasBaseType<User>();
-            modelBuilder.Entity<Customer>().HasBaseType<User>();
         }
     }
 }

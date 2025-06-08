@@ -9,7 +9,7 @@ namespace Mas_Project
         public DBContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<DBContext>();
-            optionsBuilder.UseSqlite("Data Source=mas_project.db"); // or your actual connection string
+            optionsBuilder.UseSqlite("Data Source=mas_project.db");
 
             return new DBContext(optionsBuilder.Options);
         }
