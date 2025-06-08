@@ -8,6 +8,7 @@ public interface IQuestRepository
     Task<IEnumerable<Quest>> GetAllAsync();
     Task AddAsync(Quest quest);
     Task UpdateAsync(Quest quest);
+    
     Task DeleteAsync(Guid id);
     Task SaveChangesAsync();
 }

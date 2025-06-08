@@ -6,6 +6,7 @@ namespace Mas_Project.Models;
 
 public class Quest
 {
+    //
     [Key]
     [Required]
     public Guid QuestID { get; set; }
