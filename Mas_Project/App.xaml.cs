@@ -4,6 +4,7 @@ using Mas_Project.Data;
 using Mas_Project.Services;
 using Mas_Project.Data.Repositories;
 using Mas_Project.Data.Repositories.Interfaces;
+using Mas_Project.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mas_Project
@@ -33,6 +34,8 @@ namespace Mas_Project
             services.AddScoped<IQuestBoardRepository, QuestBoardRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ITeamRepository, TeamRepository>();
+            
+            services.AddScoped<QuestBoardViewModel>();
 
             ServiceProvider = services.BuildServiceProvider();
         }

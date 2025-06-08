@@ -5,12 +5,14 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Mas_Project.Data;
+using Mas_Project.Models;
 
 namespace Mas_Project.ViewModels;
 
 public class QuestBoardViewModel : INotifyPropertyChanged
 {
     public ObservableCollection<Quest> Quests { get; set; } = new();
+    public ObservableCollection<QuestBoard> QuestBoards { get; set; } = new();
     public int FilterRank { get; set; } = 0;
 
     public ICommand LoadQuestsCommand { get; }
@@ -43,6 +45,16 @@ public class QuestBoardViewModel : INotifyPropertyChanged
 
         LoadQuestsCommand = new RelayCommand(async _ => await LoadQuestsAsync());
         FilterCommand = new RelayCommand(async _ => await FilterQuestsAsync());
+    }
+    
+    public async void LoadBoards()
+    {
+        var boards = await _questBoardService.GetAllBoardsAsync();
+        QuestBoards.Clear();
+        foreach (var board in boards)
+        {
+            QuestBoards.Add(board);
+        }
     }
 
     public async Task LoadQuestsAsync()

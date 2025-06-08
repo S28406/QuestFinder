@@ -14,6 +14,8 @@ public class QuestBoard
     [MinLength(5)]
     public string Location { get; set; }
 
+    public string ImageUrl { get; set; } = "";
+
     public ICollection<Quest> Quests { get; set; } = new List<Quest>();
     public QuestBoard(){}
     public QuestBoard(Guid questBoardId, string location)

@@ -1,4 +1,5 @@
-﻿using Mas_Project.Models;
+﻿using System.IO;
+using Mas_Project.Models;
 using Mas_Project.Data.Repositories;
 using Mas_Project.Data.Repositories.Interfaces;
 
@@ -17,6 +18,34 @@ public class QuestBoardService
     {
         var board = await _questBoardRepo.GetByIdAsync(questBoardId);
         return (List<Quest>)board?.Quests ?? new List<Quest>();
+    }
+
+    public async Task<List<QuestBoard>> GetAllBoardsAsync()
+    {
+        var boards = await _questBoardRepo.GetAllAsync();
+
+        var random = new Random();
+        string imageDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
+        string[] availableImages = Array.Empty<string>();
+
+        if (Directory.Exists(imageDir))
+        {
+            availableImages = Directory.GetFiles(imageDir, "*.*")
+                .Where(f => f.EndsWith(".png") || f.EndsWith(".jpg") || f.EndsWith(".jpeg"))
+                .Select(Path.GetFileName)
+                .ToArray();
+        }
+
+        foreach (var board in boards)
+        {
+            if (string.IsNullOrWhiteSpace(board.ImageUrl) && availableImages.Length > 0)
+            {
+                var randomImage = availableImages[random.Next(availableImages.Length)];
+                board.ImageUrl = Path.Combine("Images", randomImage).Replace("\\", "/");
+            }
+        }
+
+        return (List<QuestBoard>)boards;
     }
 
     public async Task<List<Quest>> FilterQuestsByRankAsync(Guid questBoardId, int rank)
