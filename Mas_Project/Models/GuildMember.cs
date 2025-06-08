@@ -31,10 +31,8 @@ public class GuildMember : User, IGuildManager, IGuildMaster
     public ICollection<Mount> Mounts { get; set; } = new List<Mount>();
     public Guid TeamGuid { get; set; }
     public Team Team { get; set; }
-    public Guid DateTakenId { get; set; }
-    public DateTaken DateTaken { get; set; }
-    public Guid DateUnlockedId { get; set; }
-    public DateUnlocked DateUnlocked { get; set; }
+    public ICollection<DateTaken> DatesTaken { get; set; } = new List<DateTaken>();
+    public ICollection<DateUnlocked> DatesUnlocked { get; set; } = new List<DateUnlocked>(); 
     
 
     public GuildMember(string username, Guid userId, string? email, int rank, int experiencePoints,

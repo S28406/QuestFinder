@@ -28,10 +28,19 @@ public class QuestBoardService
     public async Task AddQuestToBoardAsync(Guid questBoardId, Quest quest)
     {
         var board = await _questBoardRepo.GetByIdAsync(questBoardId);
-        if (board == null) throw new ArgumentException("Quest board not found");
+        if (board == null)
+            throw new ArgumentException("Quest board not found");
+
+        // Check uniqueness of priority
+        if (board.Quests.Any(q => q.Priority == quest.Priority))
+            throw new InvalidOperationException("A quest with this priority already exists on the board.");
+
+        // Set FK relationship
+        quest.QuestBoardId = questBoardId;
 
         board.Quests.Add(quest);
         await _questBoardRepo.UpdateAsync(board);
         await _questBoardRepo.SaveChangesAsync();
     }
+
 }

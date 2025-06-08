@@ -64,7 +64,7 @@ public static class DataSeeder
 
             // Create a team using the manager (valid by domain rules)
             var team = await teamService.CreateTeamAsync(2, manager.UserID);
-            await teamService.AddMemberToTeamAsync(team.TeamID, manager.UserID, manager.UserID);
+            await teamService.AddMemberToTeamAsync(team.TeamID, manager.UserID, member2.UserID);
             await teamService.AddMemberToTeamAsync(team.TeamID, manager.UserID, member1.UserID);
 
             // Create a quest

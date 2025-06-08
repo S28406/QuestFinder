@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Mas_Project.Enums;
 using Mas_Project.Models;
 
@@ -40,6 +41,7 @@ public class Quest
     public Guid CustomerId { get; set; }
     public Customer Customer { get; set; }
     public Guid QuestBoardId { get; set; }
+    [ForeignKey("QuestBoardId")]
     public QuestBoard QuestBoard { get; set; }
     public ICollection<DateTaken> DateTakens { get; set; } = new List<DateTaken>();
     
