@@ -59,6 +59,7 @@ public static class DataSeeder
 
             // Save members to get valid references
             await context.GuildMembers.AddRangeAsync(member1, member2, manager);
+            await context.Customers.AddAsync(customer);
             await context.SaveChangesAsync();
 
             // Create a team using the manager (valid by domain rules)
@@ -77,11 +78,11 @@ public static class DataSeeder
                 reward: "100 gold",
                 priority: 2,
                 type: QuestType.SlayTheMonsters,
-                requirements: "Basic weapons",
+                requirements: "No Additional Requirments",
                 status: QuestStatus.Created
             );
-
-            await questService.AddQuestAsync(quest);
+    
+            await questService.AddQuestAsync(quest, customer.UserID);
 
             // Create quest board and attach quest
             var board = new QuestBoard(Guid.NewGuid(), "Town Center");

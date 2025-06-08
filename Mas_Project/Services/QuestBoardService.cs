@@ -16,7 +16,7 @@ public class QuestBoardService
     public async Task<List<Quest>> GetAllQuestsAsync(Guid questBoardId)
     {
         var board = await _questBoardRepo.GetByIdAsync(questBoardId);
-        return board?.Quests ?? new List<Quest>();
+        return (List<Quest>)board?.Quests ?? new List<Quest>();
     }
 
     public async Task<List<Quest>> FilterQuestsByRankAsync(Guid questBoardId, int rank)
