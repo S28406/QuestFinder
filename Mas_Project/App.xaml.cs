@@ -1,43 +1,53 @@
-﻿using System.Configuration;
-using System.Data;
-using System.Windows;
+﻿using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
 using Mas_Project.Data;
 using Mas_Project.Services;
+using Mas_Project.Data.Repositories;
+using Mas_Project.Data.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Mas_Project;
-
-/// <summary>
-/// Interaction logic for App.xaml
-/// </summary>
-public partial class App : Application
+namespace Mas_Project
 {
-    public static IServiceProvider ServiceProvider { get; private set; }
-
-    protected override void OnStartup(StartupEventArgs e)
+    public partial class App : Application
     {
-        var services = new ServiceCollection();
+        public static IServiceProvider ServiceProvider { get; private set; }
 
-        services.AddDbContext<DBContext>(options =>
-            options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+        public App()
+        {
+            var services = new ServiceCollection();
 
-        services.AddScoped<GuildMemberService>(); // your service
-        // Add other services/repositories...
+            // Replace with your actual connection string if needed
+            services.AddDbContext<DBContext>(options =>
+                options.UseSqlite("Data Source=DataBase.sqlite"));
 
-        ServiceProvider = services.BuildServiceProvider();
+            // Register all services
+            services.AddScoped<GuildMemberService>();
+            services.AddScoped<QuestService>();
+            services.AddScoped<QuestBoardService>();
+            services.AddScoped<CustomerService>();
+            services.AddScoped<TeamService>();
 
-        var mainWindow = new MainWindow();
-        mainWindow.DataContext = ServiceProvider.GetRequiredService<GuildMemberService>();
-        mainWindow.Show();
+            // Register all repositories
+            services.AddScoped<IGuildMemberRepository, GuildMemberRepository>();
+            services.AddScoped<IQuestRepository, QuestRepository>();
+            services.AddScoped<IQuestBoardRepository, QuestBoardRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<ITeamRepository, TeamRepository>();
 
-        base.OnStartup(e);
+            ServiceProvider = services.BuildServiceProvider();
+        }
+
+        protected override async void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            var context = ServiceProvider.GetRequiredService<DBContext>();
+            var teamService = ServiceProvider.GetRequiredService<TeamService>();
+            var guildMemberService = ServiceProvider.GetRequiredService<GuildMemberService>();
+            var questService = ServiceProvider.GetRequiredService<QuestService>();
+            var questBoardService = ServiceProvider.GetRequiredService<QuestBoardService>();
+
+            await DataSeeder.SeedAsync(context, teamService, guildMemberService, questService, questBoardService);
+        }
     }
-
-    private IConfiguration Configuration => new ConfigurationBuilder()
-        .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-        .Build();
 }
-

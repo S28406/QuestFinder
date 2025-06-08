@@ -23,6 +23,11 @@ namespace Mas_Project.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<GuildMember>().ToTable("GuildMembers");
+            modelBuilder.Entity<Customer>().ToTable("Customers");
+            
+            
             base.OnModelCreating(modelBuilder);
 
             // === Quest → Customer ===
@@ -69,8 +74,7 @@ namespace Mas_Project.Data
             
 
             // === Primary Keys ===
-            modelBuilder.Entity<GuildMember>().HasKey(g => g.UserID);
-            modelBuilder.Entity<Customer>().HasKey(c => c.UserID);
+            modelBuilder.Entity<User>().HasKey(u => u.UserID);
             modelBuilder.Entity<Team>().HasKey(t => t.TeamID);
             modelBuilder.Entity<Quest>().HasKey(q => q.QuestID);
             modelBuilder.Entity<QuestBoard>().HasKey(qb => qb.QuestBoardID);

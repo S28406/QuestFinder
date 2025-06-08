@@ -46,7 +46,7 @@ public class Quest
     public ICollection<DateTaken> DateTakens { get; set; } = new List<DateTaken>();
     
     
-
+    public Quest(){}
     public Quest(Guid questId, string title, string description, int minParticipants, int minRank,
         double durationHours, string reward, int priority, QuestType type,
         string requirements, QuestStatus status)

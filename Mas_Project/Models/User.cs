@@ -11,6 +11,7 @@ public abstract class User
     public Guid UserID { get; set; }
     public string? Email { get; set; }
 
+    public User(){}
     public User(string username, Guid userId, string? email = null)
     {
         Username = username;

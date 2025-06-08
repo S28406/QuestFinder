@@ -17,7 +17,7 @@ public class Mount
     
     public Guid GuildMemberId { get; set; }
     public GuildMember GuildMember { get; set; }
-
+    public Mount(){}
     public Mount(Guid mountId, string name, string type)
     {
         MountID = mountId;

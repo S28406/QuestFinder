@@ -15,7 +15,7 @@ public class QuestBoard
     public string Location { get; set; }
 
     public ICollection<Quest> Quests { get; set; } = new List<Quest>();
-
+    public QuestBoard(){}
     public QuestBoard(Guid questBoardId, string location)
     {
         QuestBoardID = questBoardId;

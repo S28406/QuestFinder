@@ -16,7 +16,7 @@ public class Achievement
     public int ExperienceReward { get; set; }
 
     public ICollection<DateUnlocked> DatesUnlocked { get; set; } = new List<DateUnlocked>();
-
+    public Achievement() { }
     public Achievement(Guid achievementId, string name, int experienceReward)
     {
         AchievementID = achievementId;

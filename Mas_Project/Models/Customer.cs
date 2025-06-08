@@ -12,6 +12,7 @@ public class Customer : User
     public DateTime RegistrationDate { get; set; }
     
     public ICollection<Quest> Quests { get; set; } = new List<Quest>();
+    public Customer(){}
 
     public Customer(string username, Guid userId, string? email, int reputationScore, DateTime registrationDate)
         : base(username, userId, email)

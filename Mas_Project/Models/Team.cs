@@ -15,7 +15,7 @@ public class Team
     public int Rank { get; set; }
 
     public ICollection<GuildMember> Members { get; set; } = new List<GuildMember>();
-
+    public Team(){}
     public Team(Guid teamId, int rank)
     {
         TeamID = teamId;

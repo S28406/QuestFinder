@@ -33,7 +33,7 @@ public class GuildMember : User, IGuildManager, IGuildMaster
     public Team Team { get; set; }
     public ICollection<DateTaken> DatesTaken { get; set; } = new List<DateTaken>();
     public ICollection<DateUnlocked> DatesUnlocked { get; set; } = new List<DateUnlocked>(); 
-    
+    public GuildMember(){}
 
     public GuildMember(string username, Guid userId, string? email, int rank, int experiencePoints,
         MemberRole memberRole, string? relic = null, string? leadershipStyle = null, int? assignedRoom = null)

@@ -86,8 +86,10 @@ public static class DataSeeder
 
             // Create quest board and attach quest
             var board = new QuestBoard(Guid.NewGuid(), "Town Center");
+            Console.WriteLine($"[SEEDING] QuestBoardID: {board.QuestBoardID}");
             board.AddQuest(quest);
             await questBoardService.AddQuestToBoardAsync(board.QuestBoardID, quest);
+            await context.SaveChangesAsync();
         }
     }
 }
