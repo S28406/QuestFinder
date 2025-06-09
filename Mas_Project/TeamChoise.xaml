@@ -1,0 +1,50 @@
+﻿<Page x:Class="Mas_Project.TeamChoise"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="TeamChoise">
+    <ScrollViewer Background="#141a1f">
+        <StackPanel Margin="40">
+            <!-- Header -->
+            <DockPanel LastChildFill="True" Margin="0,0,0,20">
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center">
+                    <TextBlock Text="QuestHub" Foreground="White" FontSize="18" FontWeight="Bold" />
+                </StackPanel>
+            </DockPanel>
+
+            <TextBlock Text="Choose Your Path" FontSize="32" FontWeight="Bold" Foreground="White" />
+
+            <!-- Solo Adventure -->
+            <TextBlock Text="Solo Adventure" FontSize="22" FontWeight="Bold" Foreground="White" Margin="0,30,0,10" />
+            <Border CornerRadius="12" Background="#1f272e" Padding="0" Margin="0,0,0,20">
+                <DockPanel>
+                    <Image Height="200" DockPanel.Dock="Left" Source="https://lh3.googleusercontent.com/aida-public/AB6AXuC0aKDohcS3A5jUmGvxUWaos0MkalQQKXWe-BEferyuvWjY3l-Nzi2PumKJiZfKojS3O89HmS-Km2npaL9iWaULSgjHZuS83gk7rWZPql7q2qFj8PDNplFxMkPpxgzmUH-faXCwnFl-u8JerwFzfF9tRnPIa5U53VVnFNStJN1jwb9D_-_QoEBfWC_NK6kfprdHFRlUsfUQAhZfgBwh64ngvcCOl7ozhVP9zRPcAL4op13JLhPQ_oT_5Soc486JwyXQmvfyFu99Eh8K" />
+                    <StackPanel Margin="20">
+                        <TextBlock Text="Embark Alone" FontSize="16" FontWeight="Bold" Foreground="White" />
+                        <TextBlock Text="Face the challenges of the realm on your own. Test your skills and courage in a solitary quest." 
+                                   TextWrapping="Wrap" Foreground="#9daebe" Margin="0,5"/>
+                        <Button Content="Go Alone"
+                                Background="#dce8f3"
+                                Foreground="#141a1f"
+                                Padding="10,4"
+                                Width="100"
+                                Click="GoAlone_Click" />
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+
+            <!-- Team Adventure -->
+            <TextBlock Text="Team Up" FontSize="22" FontWeight="Bold" Foreground="White" Margin="0,30,0,10" />
+            <Border CornerRadius="12" Background="#1f272e" Padding="0">
+                <DockPanel>
+                    <Image Height="200" DockPanel.Dock="Left" Source="https://lh3.googleusercontent.com/aida-public/AB6AXuArkOrxq9FCIS59mAfD-BbuxEiK_8tRaezUq489xRiaxJniKxM1hCvioyda50nsjdsNNa1NVStLU5byOQmvV3x8ficVtRU4TX8Y3YSnYYQDklktTX0u1J0W312qZ6Y0VEsSW1kijEEk4e4G5wRGMmQ3bAcYtpM0gBiRSth9qxbAnFz3foWILl4jZtjp8O3k04Eyvrz-5gHH0os0HwreDUfiiDjvcRd-NSr3k0UxF7gyhcXkuxvV7nPtsnarwbf9GEeTqmTrdY1hXCkD" />
+                    <StackPanel Margin="20">
+                        <TextBlock Text="Join a Team" FontSize="16" FontWeight="Bold" Foreground="White" />
+                        <TextBlock Text="Collaborate with fellow adventurers to overcome obstacles and achieve common goals. Strength in numbers!" 
+                                   TextWrapping="Wrap" Foreground="#9daebe" Margin="0,5"/>
+                        <Button Content="Find a Team" Background="#dce8f3" Foreground="#141a1f" Padding="10,4" Width="100" />
+                    </StackPanel>
+                </DockPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

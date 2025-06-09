@@ -66,4 +66,42 @@ public class GuildMemberService
         await _teamRepo.UpdateAsync(team);
         await _teamRepo.SaveChangesAsync();
     }
+    
+    public async Task AssignQuestToMemberAsync(Guid memberId, Quest quest)
+    {
+        var member = await _memberRepo.GetByIdAsync(memberId);
+        if (member == null) throw new ArgumentException("Member not found.");
+
+        bool alreadyTaken = quest.DateTakens.Any(dt => dt.GuildMemberId == memberId);
+        if (member.Rank < quest.MinRank)
+        {
+            throw new ArgumentException("Guild Member must be at least rank " + quest.MinRank + " to take the " +
+                                        quest.Title +"quest.");
+        }
+
+        if (!alreadyTaken)
+        {
+            var dateTaken = new DateTaken(DateTime.UtcNow)
+            {
+                GuildMemberId = memberId,
+                QuestId = quest.QuestID,
+                GuildMember = member,
+                Quest = quest
+            };
+
+            quest.DateTakens.Add(dateTaken);
+
+        }
+        else
+        {
+            // Optional: silently ignore or throw an error
+            throw new InvalidOperationException("This member has already taken the quest.");
+        }
+
+        await _memberRepo.SaveChangesAsync();
+    }
+    public Guid GetTestUser()
+    {
+        return _memberRepo.GetAllAsync().Result.First().UserID;
+    }
 }

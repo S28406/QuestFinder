@@ -15,7 +15,10 @@ public class QuestRepository : IQuestRepository
 
     public async Task<Quest?> GetByIdAsync(Guid id)
     {
-        return await _context.Quests.FindAsync(id);
+        return await _context.Quests
+            .Include(q => q.DateTakens)
+            .ThenInclude(dt => dt.GuildMember)
+            .FirstOrDefaultAsync(q => q.QuestID == id);
     }
 
     public async Task<IEnumerable<Quest>> GetAllAsync()

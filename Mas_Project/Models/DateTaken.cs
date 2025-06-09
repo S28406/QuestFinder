@@ -15,6 +15,8 @@ public class DateTaken
     [Required]
     public Guid QuestId { get; set; }
     public Quest Quest { get; set; }
+    
+    public DateTaken() {}
 
     public DateTaken(DateTime date)
     {

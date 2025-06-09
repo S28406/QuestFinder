@@ -35,9 +35,9 @@ public class GuildMember : User, IGuildManager, IGuildMaster
     public ICollection<DateUnlocked> DatesUnlocked { get; set; } = new List<DateUnlocked>(); 
     public GuildMember(){}
 
-    public GuildMember(string username, Guid userId, string? email, int rank, int experiencePoints,
+    public GuildMember(string username, string? email, int rank, int experiencePoints,
         MemberRole memberRole, string? relic = null, string? leadershipStyle = null, int? assignedRoom = null)
-        : base(username, userId, email)
+        : base(username, email)
     {
         Rank = rank;
         ExperiencePoints = experiencePoints;

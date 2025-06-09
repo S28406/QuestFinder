@@ -153,3 +153,7 @@ D:\Projects\Mas_Project\Mas_Project\obj\Debug\net9.0-windows\HomePage.baml
 D:\Projects\Mas_Project\Mas_Project\obj\Debug\net9.0-windows\QuestList.baml
 D:\Projects\Mas_Project\Mas_Project\bin\Debug\net9.0-windows\Images\EldoriaForest.png
 D:\Projects\Mas_Project\Mas_Project\obj\Debug\net9.0-windows\Mas_Project_Content.g.cs
+D:\Projects\Mas_Project\Mas_Project\obj\Debug\net9.0-windows\QuestDiscription.baml
+D:\Projects\Mas_Project\Mas_Project\obj\Debug\net9.0-windows\QuestDiscription.g.cs
+D:\Projects\Mas_Project\Mas_Project\obj\Debug\net9.0-windows\TeamChoise.baml
+D:\Projects\Mas_Project\Mas_Project\obj\Debug\net9.0-windows\TeamChoise.g.cs

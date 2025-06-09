@@ -30,12 +30,6 @@
             <!-- Header -->
             <DockPanel LastChildFill="True" Margin="0,0,0,20">
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,20,0">
-                    <Viewbox Width="24" Height="24" Margin="0,0,6,0">
-                        <Canvas Width="48" Height="48">
-                            <Path Fill="White"
-                                  Data="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z"/>
-                        </Canvas>
-                    </Viewbox>
                     <TextBlock Text="QuestHub" Foreground="White" FontSize="18" FontWeight="Bold" />
                 </StackPanel>
 
@@ -49,7 +43,7 @@
 
             <!-- Title & Description -->
             <StackPanel Margin="0,0,0,30">
-                <TextBlock Text="Available Quests" FontSize="28" FontWeight="Bold" Foreground="White" />
+                <TextBlock x:Name="PageTitle" Text="Available Quests" FontSize="28" FontWeight="Bold" Foreground="White" />
                 <TextBlock Text="Explore the world and embark on exciting adventures. Choose your path and forge your legend."
                            FontSize="14" Foreground="#a2aab3" TextWrapping="Wrap" Margin="0,5,0,0"/>
             </StackPanel>
@@ -61,40 +55,31 @@
                 <Button Content="Rewards" Style="{StaticResource FilterButtonStyle}" />
             </StackPanel>
 
-            <!-- Quest Card Example -->
-            <StackPanel Orientation="Vertical">
-                <Border CornerRadius="12" Background="#1b1e22" Padding="20" Margin="0,0,0,20">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <!-- Quest Info -->
-                        <StackPanel Grid.Column="0" Margin="0,0,20,0">
-                            <TextBlock Text="Rank: F" FontSize="12" Foreground="#a2aab3" />
-                            <TextBlock Text="The Whispering Woods" FontSize="18" FontWeight="Bold" Foreground="White" Margin="0,5,0,0" />
-                            <TextBlock Text="Investigate the strange occurrences in the Whispering Woods. Locals report unusual animal behavior and eerie sounds. Suitable for beginners."
-                                       FontSize="13" Foreground="#a2aab3" TextWrapping="Wrap" Margin="0,5,0,10" />
-                            <Button Content="View Quest" Background="#2c3035" Foreground="White"
-                                    Padding="10,4" BorderThickness="0" Width="120" />
-                        </StackPanel>
-
-                        <!-- Quest Image -->
-                        <Border Grid.Column="1" Background="LightGray" CornerRadius="10">
-                            <Image Source="https://via.placeholder.com/200x120" Stretch="UniformToFill" />
+            <!-- Quest List -->
+            <ItemsControl x:Name="QuestItemsControl">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border CornerRadius="12" Background="#1b1e22" Padding="20" Margin="0,0,0,20" >
+                            <StackPanel>
+                                <TextBlock Text="{Binding MinRank, StringFormat='Rank: {0}'}" FontSize="12" Foreground="#a2aab3" />
+                                <TextBlock Text="{Binding Title}" FontSize="18" FontWeight="Bold" Foreground="White" Margin="0,5,0,0" />
+                                <TextBlock Text="{Binding Description}" FontSize="13" Foreground="#a2aab3"
+                                           TextWrapping="Wrap" Margin="0,5,0,10" />
+                                <Button Content="View Quest" Background="#2c3035" Foreground="White"
+                                        Padding="10,4" BorderThickness="0" Width="120"
+                                        Click="ViewQuest_Click"
+                                        Tag="{Binding QuestID}" />
+                            </StackPanel>
                         </Border>
-                    </Grid>
-                </Border>
-            </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
-            <!-- Pagination -->
+            <!-- Pagination (Optional Placeholder) -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,30,0,0">
                 <Button Content="⟨" Width="36" Height="36" Background="Transparent" Foreground="White" BorderThickness="0" />
                 <Button Content="1" Width="36" Height="36" Background="#2c3035" Foreground="White" BorderThickness="0" FontWeight="Bold" />
                 <Button Content="2" Width="36" Height="36" Background="Transparent" Foreground="White" BorderThickness="0" />
-                <Button Content="3" Width="36" Height="36" Background="Transparent" Foreground="White" BorderThickness="0" />
-                <Button Content="4" Width="36" Height="36" Background="Transparent" Foreground="White" BorderThickness="0" />
                 <Button Content="⟩" Width="36" Height="36" Background="Transparent" Foreground="White" BorderThickness="0" />
             </StackPanel>
 

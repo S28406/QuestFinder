@@ -12,10 +12,10 @@ public abstract class User
     public string? Email { get; set; }
 
     public User(){}
-    public User(string username, Guid userId, string? email = null)
+    public User(string username, string? email = null)
     {
         Username = username;
-        UserID = userId;
+        UserID = Guid.NewGuid();
         Email = email;
     }
 }

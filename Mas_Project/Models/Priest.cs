@@ -8,9 +8,9 @@ public class Priest : GuildMember
     [Required]
     public int DivinePower { get; set; }
     public Priest(){}
-    public Priest(string username, Guid userId, string? email, int rank, int experiencePoints, MemberRole memberRole,
+    public Priest(string username, string? email, int rank, int experiencePoints, MemberRole memberRole,
         int divinePower, string? relic = null, string? leadershipStyle = null, int? assignedRoom = null)
-        : base(username, userId, email, rank, experiencePoints, memberRole, relic, leadershipStyle, assignedRoom)
+        : base(username, email, rank, experiencePoints, memberRole, relic, leadershipStyle, assignedRoom)
     {
         DivinePower = divinePower;
     }

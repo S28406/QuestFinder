@@ -39,28 +39,35 @@ public static class DataSeeder
         // Seed only if empty
         if (!context.GuildMembers.Any())
         {
+            
+            var memberForTesting = new GuildMember(
+                username: "TestMember",
+                email: "TestMember",
+                rank: 1,
+                experiencePoints: 9999,
+                memberRole: MemberRole.RegularMember
+            );
+            
             // Create sample members
             var member1 = new GuildMember(
                 username: "Aaron",
-                userId: Guid.NewGuid(),
                 email: "auron@guild.com",
-                rank: 1,
+                rank: 2,
                 experiencePoints: 100,
                 memberRole: MemberRole.RegularMember
             );
 
             var member2 = new GuildMember(
                 username: "Lina",
-                userId: Guid.NewGuid(),
                 email: "lina@guild.com",
                 rank: 2,
                 experiencePoints: 200,
                 memberRole: MemberRole.RegularMember
             );
+            
 
             var manager = new GuildMember(
-                username: "August",
-                userId: Guid.NewGuid(),
+                username: "August Manager",
                 email: "august@guild.com",
                 rank: 5,
                 experiencePoints: 500,
@@ -68,15 +75,14 @@ public static class DataSeeder
             );
 
             var customer = new Customer(
-                username: "August",
-                userId: Guid.NewGuid(),
+                username: "August Customer",
                 email: "august@guild.com",
                 reputationScore: 100,
                 registrationDate: DateTime.Now
             );
 
             // Save members to get valid references
-            await context.GuildMembers.AddRangeAsync(member1, member2, manager);
+            await context.GuildMembers.AddRangeAsync(memberForTesting, member1, member2, manager);
             await context.Customers.AddAsync(customer);
             await context.SaveChangesAsync();
 
@@ -90,8 +96,8 @@ public static class DataSeeder
                 questId: Guid.NewGuid(),
                 title: "Slay the Forest Troll",
                 description: "A dangerous troll haunts the woods near the village.",
-                minParticipants: 2,
-                minRank: 1,
+                minParticipants: 1,
+                minRank: 2,
                 durationHours: 5,
                 reward: "100 gold",
                 priority: 2,
@@ -132,6 +138,9 @@ public static class DataSeeder
             await questService.CreateAndAssignQuestAsync(board.QuestBoardID, customer.UserID, quest);
             await questService.CreateAndAssignQuestAsync(board.QuestBoardID, customer.UserID, quest2);
             await questService.CreateAndAssignQuestAsync(board.QuestBoardID, customer.UserID, quest3);
+            
+            await guildMemberService.AssignQuestToMemberAsync(member1.UserID, quest);
+            await guildMemberService.AssignQuestToMemberAsync(member2.UserID, quest);
     
 
             // Create quest board and attach quest

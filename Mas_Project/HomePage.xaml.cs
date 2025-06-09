@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Mas_Project.Models;
 using Mas_Project.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,7 +24,10 @@ public partial class HomePage : Page
 
     private void Board_Click(object sender, MouseButtonEventArgs e)
     {
+        var stackPanel = (StackPanel)sender;
+        var board = (QuestBoard)stackPanel.DataContext;
+
         var mainWindow = Window.GetWindow(this) as MainWindow;
-        mainWindow.MainFrame.Navigate(new QuestList());
+        mainWindow.MainFrame.Navigate(new QuestList(board.QuestBoardID, board.Name));
     }
 }
