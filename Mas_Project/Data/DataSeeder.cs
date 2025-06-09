@@ -7,6 +7,24 @@ namespace Mas_Project.Data;
 
 public static class DataSeeder
 {
+    public static void Clean(DBContext context)
+    {
+        context.Customers.RemoveRange(context.Customers);
+        context.QuestBoards.RemoveRange(context.QuestBoards);
+        context.GuildMembers.RemoveRange(context.GuildMembers);
+        context.Quests.RemoveRange(context.Quests);
+        context.Achievements.RemoveRange(context.Achievements);
+        context.Customers.RemoveRange(context.Customers);
+        context.DatesUnlocked.RemoveRange(context.DatesUnlocked);
+        context.DatesTaken.RemoveRange(context.DatesTaken);
+        context.Mages.RemoveRange(context.Mages);
+        context.Mounts.RemoveRange(context.Mounts);
+        context.Priests.RemoveRange(context.Priests);
+        context.Teams.RemoveRange(context.Teams);
+        context.Warriors.RemoveRange(context.Warriors);
+        
+        context.SaveChanges();
+    }
     public static async Task SeedAsync(
         DBContext context,
         TeamService teamService,
@@ -15,9 +33,9 @@ public static class DataSeeder
         QuestBoardService questBoardService
     )
     {
+        Clean(context);
         // Ensure the database and tables exist
         await context.Database.MigrateAsync();
-
         // Seed only if empty
         if (!context.GuildMembers.Any())
         {
@@ -81,14 +99,42 @@ public static class DataSeeder
                 requirements: "No Additional Requirments",
                 status: QuestStatus.Created
             );
+            var quest2 = new Quest(
+                questId: Guid.NewGuid(),
+                title: "Slay the Forest Troll",
+                description: "A dangerous troll haunts the woods near the village.",
+                minParticipants: 2,
+                minRank: 1,
+                durationHours: 5,
+                reward: "100 gold",
+                priority: 3,
+                type: QuestType.SlayTheMonsters,
+                requirements: "No Additional Requirments",
+                status: QuestStatus.Created
+            );
+            var quest3 = new Quest(
+                questId: Guid.NewGuid(),
+                title: "Slay the Forest Troll",
+                description: "A dangerous troll haunts the woods near the village.",
+                minParticipants: 2,
+                minRank: 1,
+                durationHours: 5,
+                reward: "100 gold",
+                priority: 1,
+                type: QuestType.SlayTheMonsters,
+                requirements: "No Additional Requirments",
+                status: QuestStatus.Created
+            );
+            
+            var board = await questBoardService.AddBoardAsync("Town Center", "Eldoria Forest");
+            var board2 = await questBoardService.AddBoardAsync("East Plains", "Ironpeak Mountains");
+            Console.WriteLine($"[SEEDING] QuestBoardID: {board.QuestBoardID}");
+            await questService.CreateAndAssignQuestAsync(board.QuestBoardID, customer.UserID, quest);
+            await questService.CreateAndAssignQuestAsync(board.QuestBoardID, customer.UserID, quest2);
+            await questService.CreateAndAssignQuestAsync(board.QuestBoardID, customer.UserID, quest3);
     
-            await questService.AddQuestAsync(quest, customer.UserID);
 
             // Create quest board and attach quest
-            var board = new QuestBoard(Guid.NewGuid(), "Town Center");
-            Console.WriteLine($"[SEEDING] QuestBoardID: {board.QuestBoardID}");
-            board.AddQuest(quest);
-            await questBoardService.AddQuestToBoardAsync(board.QuestBoardID, quest);
             await context.SaveChangesAsync();
         }
     }

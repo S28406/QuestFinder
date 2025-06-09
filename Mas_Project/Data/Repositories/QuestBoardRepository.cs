@@ -22,7 +22,8 @@ public class QuestBoardRepository : IQuestBoardRepository
 
     public async Task<IEnumerable<QuestBoard>> GetAllAsync()
     {
-        return await _context.QuestBoards.Include(qb => qb.Quests).ToListAsync();
+        // return await _context.QuestBoards.Include(qb => qb.Quests).ToListAsync();
+        return await _context.QuestBoards.ToListAsync();
     }
 
     public async Task AddAsync(QuestBoard board)

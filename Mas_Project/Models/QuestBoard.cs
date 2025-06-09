@@ -11,17 +11,20 @@ public class QuestBoard
     [Required]
     public Guid QuestBoardID { get; set; }
     [Required]
+    public string Name { get; set; }
+    [Required]
     [MinLength(5)]
     public string Location { get; set; }
 
-    public string ImageUrl { get; set; } = "";
+    public string ImageUrl { get; set; } = "Images/EldoriaForest.png";
 
     public ICollection<Quest> Quests { get; set; } = new List<Quest>();
     public QuestBoard(){}
-    public QuestBoard(Guid questBoardId, string location)
+    public QuestBoard(Guid questBoardId, string location, string name)
     {
         QuestBoardID = questBoardId;
         Location = location;
+        Name = name;
     }
 
     public List<Quest> GetAllQuests() => Quests as List<Quest>;

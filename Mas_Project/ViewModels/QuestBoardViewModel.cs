@@ -47,12 +47,14 @@ public class QuestBoardViewModel : INotifyPropertyChanged
         FilterCommand = new RelayCommand(async _ => await FilterQuestsAsync());
     }
     
-    public async void LoadBoards()
+    public async void LoadBoardsAsync()
     {
         var boards = await _questBoardService.GetAllBoardsAsync();
+        Console.WriteLine($"[DEBUG] Boards found: {boards.Count}");
         QuestBoards.Clear();
         foreach (var board in boards)
         {
+            Console.WriteLine($"[DEBUG] Board: {board.Name} exists");
             QuestBoards.Add(board);
         }
     }

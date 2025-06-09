@@ -26,7 +26,9 @@
 
   <ItemGroup>
     <None Remove="Immages\EldoriaForest.png" />
-    <Resource Include="Images\EldoriaForest.png" />
+    <Content Include="Images\EldoriaForest.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Remove="Immages\IronpeakMountains.png" />
     <Resource Include="Images\IronpeakMountains.png" />
     <None Remove="Immages\SilverstreamCity.png" />

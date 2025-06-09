@@ -17,14 +17,6 @@
                            FontSize="20"
                            FontWeight="Bold"
                            DockPanel.Dock="Left" />
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBlock Text="Home" Foreground="White" Margin="10,0"/>
-                    <TextBlock Text="Quests" Foreground="White" Margin="10,0"/>
-                    <TextBlock Text="Characters" Foreground="White" Margin="10,0"/>
-                    <TextBlock Text="Inventory" Foreground="White" Margin="10,0"/>
-                    <TextBlock Text="Settings" Foreground="White" Margin="10,0"/>
-                </StackPanel>
             </DockPanel>
 
             <!-- Banner -->
@@ -50,56 +42,27 @@
                            TextWrapping="Wrap" />
             </StackPanel>
 
-            <!-- Quest Boards -->
-            <UniformGrid Columns="2" Rows="2" HorizontalAlignment="Center" VerticalAlignment="Top">
-                <!-- Eldoria Forest -->
-                <StackPanel Margin="10" MouseLeftButtonUp="Eldoria_Click" Cursor="Hand">
-                    <Border Height="120" CornerRadius="12">
-                        <Border.Background>
-                            <ImageBrush ImageSource="Images/EldoriaForest.png"/>
-                        </Border.Background>
-                    </Border>
-                    <TextBlock Text="Eldoria Forest" Foreground="White" FontWeight="Bold" />
-                    <TextBlock Text="Quests within the ancient, enchanted forest of Eldoria."
-                               Foreground="LightGray" FontSize="12" TextWrapping="Wrap"/>
-                </StackPanel>
-
-                <!-- Ironpeak Mountains -->
-                <StackPanel Margin="10">
-                    <Border Height="120" CornerRadius="12">
-                        <Border.Background>
-                            <ImageBrush ImageSource="Images/IronpeakMountains.png"/>
-                        </Border.Background>
-                    </Border>
-                    <TextBlock Text="Ironpeak Mountains" Foreground="White" FontWeight="Bold" />
-                    <TextBlock Text="Dangerous mountain quests await among the peaks."
-                               Foreground="LightGray" FontSize="12" TextWrapping="Wrap"/>
-                </StackPanel>
-
-                <!-- Silverstream City -->
-                <StackPanel Margin="10">
-                    <Border Height="120" CornerRadius="12">
-                        <Border.Background>
-                            <ImageBrush ImageSource="Images/SilverstreamCity.png"/>
-                        </Border.Background>
-                    </Border>
-                    <TextBlock Text="Silverstream City" Foreground="White" FontWeight="Bold" />
-                    <TextBlock Text="Urban challenges and diplomacy missions."
-                               Foreground="LightGray" FontSize="12" TextWrapping="Wrap"/>
-                </StackPanel>
-
-                <!-- Whispering Caves -->
-                <StackPanel Margin="10">
-                    <Border Height="120" CornerRadius="12">
-                        <Border.Background>
-                            <ImageBrush ImageSource="Images/WhisperingCaves.png"/>
-                        </Border.Background>
-                    </Border>
-                    <TextBlock Text="Whispering Caves" Foreground="White" FontWeight="Bold" />
-                    <TextBlock Text="Mysterious quests in dark, echoing caverns."
-                               Foreground="LightGray" FontSize="12" TextWrapping="Wrap"/>
-                </StackPanel>
-            </UniformGrid>
+            <!-- Dynamic Quest Boards from ViewModel -->
+            <ItemsControl ItemsSource="{Binding QuestBoards}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="2" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="10" MouseLeftButtonUp="Board_Click" Cursor="Hand">
+                            <Border Height="120" CornerRadius="12">
+                                <Border.Background>
+                                    <ImageBrush ImageSource="{Binding ImagePath}" />
+                                </Border.Background>
+                            </Border>
+                            <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="Bold" />
+                            <TextBlock Text="{Binding Description}" Foreground="LightGray" FontSize="12" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </StackPanel>
     </ScrollViewer>
 </Page>

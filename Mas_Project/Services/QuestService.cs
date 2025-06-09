@@ -7,12 +7,12 @@ namespace Mas_Project.Services;
 public class QuestService
 {
     private readonly IQuestRepository _questRepo;
-    private readonly ICustomerRepository _customerRepo;
+    private readonly IQuestBoardRepository _questBoardRepo;
 
-    public QuestService(IQuestRepository questRepo, ICustomerRepository customerRepo)
+    public QuestService(IQuestRepository questRepo, IQuestBoardRepository questBoardRepo)
     {
         _questRepo = questRepo;
-        _customerRepo = customerRepo;
+        _questBoardRepo = questBoardRepo;
     }
 
     public async Task<Quest?> GetByIdAsync(Guid id)
@@ -25,14 +25,17 @@ public class QuestService
         return await _questRepo.GetAllAsync();
     }
 
-    public async Task AddQuestAsync(Quest quest, Guid customerId)
+    
+    public async Task<Quest> CreateAndAssignQuestAsync(Guid boardId, Guid customerId, Quest quest)
     {
-        var customer = await _customerRepo.GetByIdAsync(customerId);
-        if (customer == null)
-            throw new ArgumentException("Customer not found");
-        
+        var board = await _questBoardRepo.GetByIdAsync(boardId);
+        if (board.Quests.Any(q => q.Priority == quest.Priority))
+            throw new InvalidOperationException("A quest with this priority already exists on the board.");
+        quest.QuestBoardId = boardId;
+        quest.CustomerId = customerId;
         await _questRepo.AddAsync(quest);
         await _questRepo.SaveChangesAsync();
+        return quest;
     }
 
     public async Task UpdateQuestStatusAsync(Guid questId, QuestStatus newStatus)

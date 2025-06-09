@@ -8,10 +8,12 @@ namespace Mas_Project.Services;
 public class QuestBoardService
 {
     private readonly IQuestBoardRepository _questBoardRepo;
+    private readonly IQuestRepository _questRepo;
 
-    public QuestBoardService(IQuestBoardRepository questBoardRepo)
+    public QuestBoardService(IQuestBoardRepository questBoardRepo, IQuestRepository questRepo)
     {
         _questBoardRepo = questBoardRepo;
+        _questRepo = questRepo;
     }
 
     public async Task<List<Quest>> GetAllQuestsAsync(Guid questBoardId)
@@ -23,6 +25,7 @@ public class QuestBoardService
     public async Task<List<QuestBoard>> GetAllBoardsAsync()
     {
         var boards = await _questBoardRepo.GetAllAsync();
+        Console.WriteLine($"Boards found: {boards.Count()}, From service");
 
         var random = new Random();
         string imageDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
@@ -31,7 +34,7 @@ public class QuestBoardService
         if (Directory.Exists(imageDir))
         {
             availableImages = Directory.GetFiles(imageDir, "*.*")
-                .Where(f => f.EndsWith(".png") || f.EndsWith(".jpg") || f.EndsWith(".jpeg"))
+                .Where(f => f.EndsWith(".png"))
                 .Select(Path.GetFileName)
                 .ToArray();
         }
@@ -54,22 +57,28 @@ public class QuestBoardService
         return board?.Quests.Where(q => q.MinRank == rank).ToList() ?? new List<Quest>();
     }
 
-    public async Task AddQuestToBoardAsync(Guid questBoardId, Quest quest)
+    // public async Task AddQuestToBoardAsync(Guid questBoardId, Quest quest)
+    // {
+    //     var board = await _questBoardRepo.GetByIdAsync(questBoardId);
+    //     if (board == null)
+    //         throw new ArgumentException("Quest board not found");
+    //
+    //     // Check uniqueness of priority
+    //     if (board.Quests.Any(q => q.Priority == quest.Priority))
+    //         throw new InvalidOperationException("A quest with this priority already exists on the board.");
+    //
+    //     // Set FK relationship
+    //     quest.QuestBoardId = questBoardId;
+    //
+    //     board.Quests.Add(quest);
+    //     await _questBoardRepo.UpdateAsync(board);
+    //     await _questBoardRepo.SaveChangesAsync();
+    // }
+    public async Task<QuestBoard> AddBoardAsync(string location, string name)
     {
-        var board = await _questBoardRepo.GetByIdAsync(questBoardId);
-        if (board == null)
-            throw new ArgumentException("Quest board not found");
-
-        // Check uniqueness of priority
-        if (board.Quests.Any(q => q.Priority == quest.Priority))
-            throw new InvalidOperationException("A quest with this priority already exists on the board.");
-
-        // Set FK relationship
-        quest.QuestBoardId = questBoardId;
-
-        board.Quests.Add(quest);
-        await _questBoardRepo.UpdateAsync(board);
+        var board = new QuestBoard(Guid.NewGuid(), location, name);
+        await _questBoardRepo.AddAsync(board);
         await _questBoardRepo.SaveChangesAsync();
+        return board;
     }
-
 }
