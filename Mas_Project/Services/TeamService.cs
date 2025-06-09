@@ -54,7 +54,10 @@ public class TeamService
         if (manager.MemberRole != MemberRole.GuildManager)
             throw new InvalidOperationException("Only a Guild Manager can add members to teams.");
 
+        
         team.AddMember(member);
+        member.TeamGuid = team.TeamID;
+        
         await _teamRepo.UpdateAsync(team);
         await _teamRepo.SaveChangesAsync();
     }

@@ -38,10 +38,15 @@
                 <DockPanel>
                     <Image Height="200" DockPanel.Dock="Left" Source="https://lh3.googleusercontent.com/aida-public/AB6AXuArkOrxq9FCIS59mAfD-BbuxEiK_8tRaezUq489xRiaxJniKxM1hCvioyda50nsjdsNNa1NVStLU5byOQmvV3x8ficVtRU4TX8Y3YSnYYQDklktTX0u1J0W312qZ6Y0VEsSW1kijEEk4e4G5wRGMmQ3bAcYtpM0gBiRSth9qxbAnFz3foWILl4jZtjp8O3k04Eyvrz-5gHH0os0HwreDUfiiDjvcRd-NSr3k0UxF7gyhcXkuxvV7nPtsnarwbf9GEeTqmTrdY1hXCkD" />
                     <StackPanel Margin="20">
-                        <TextBlock Text="Join a Team" FontSize="16" FontWeight="Bold" Foreground="White" />
+                        <TextBlock Text="Join with a Team" FontSize="16" FontWeight="Bold" Foreground="White" />
                         <TextBlock Text="Collaborate with fellow adventurers to overcome obstacles and achieve common goals. Strength in numbers!" 
                                    TextWrapping="Wrap" Foreground="#9daebe" Margin="0,5"/>
-                        <Button Content="Find a Team" Background="#dce8f3" Foreground="#141a1f" Padding="10,4" Width="100" />
+                        <Button Content="Go Together"
+                                Background="#dce8f3"
+                                Foreground="#141a1f"
+                                Padding="10,4"
+                                Width="100"
+                                Click="GoTogether_Click" />
                     </StackPanel>
                 </DockPanel>
             </Border>

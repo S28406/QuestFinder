@@ -13,6 +13,7 @@ namespace Mas_Project
         private readonly Guid _questId;
         private readonly QuestService _questService;
         private readonly GuildMemberService _guildMemberService;
+        private readonly TeamService _teamService;
 
         public TeamChoise(Guid questId)
         {
@@ -21,6 +22,7 @@ namespace Mas_Project
             _questId = questId;
             _questService = App.ServiceProvider.GetRequiredService<QuestService>();
             _guildMemberService = App.ServiceProvider.GetRequiredService<GuildMemberService>();
+            _teamService = App.ServiceProvider.GetRequiredService<TeamService>();
         }
 
         private async void GoAlone_Click(object sender, RoutedEventArgs e)
@@ -47,9 +49,67 @@ namespace Mas_Project
             }
         }
 
-        private void FindTeam_Click(object sender, RoutedEventArgs e)
+        private async void GoTogether_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService?.Navigate(new HomePage());
+            Guid currentUserId = _guildMemberService.GetTestUser(); // Simulate current user
+            var quest = await _questService.GetByIdAsync(_questId);
+
+            if (quest == null)
+            {
+                MessageBox.Show("Quest not found.");
+                return;
+            }
+
+            var member = await _guildMemberService.GetByIdAsync(currentUserId);
+            
+            if (member == null)
+            {
+                MessageBox.Show("User not found.");
+                return;
+            }
+            Console.WriteLine($"[DEBUG] member.TeamGuid = {member.TeamGuid}");
+
+            // Check team membership
+            if (member.TeamGuid == Guid.Empty)
+            {
+                MessageBox.Show("User not in a team.");
+                return;
+            }
+
+            var team = await _teamService.GetTeamAsync(member.TeamGuid);
+            if (team == null || team.Members == null || team.Members.Count == 0)
+            {
+                MessageBox.Show("Team not found or has no members.");
+                return;
+            }
+
+            // Check if the team meets the requirements
+            if (team.Members.Count < quest.MinNumberOfParticipants)
+            {
+                MessageBox.Show("Team does not meet the required number of participants.");
+                return;
+            }
+
+            if (team.Members.Any(m => m.Rank < quest.MinRank))
+            {
+                MessageBox.Show("The team doesnt meet the rank requirement.");
+                return;
+            }
+
+            try
+            {
+                foreach (var teamMember in team.Members)
+                {
+                    await _guildMemberService.AssignQuestToMemberAsync(teamMember.UserID, quest);
+                }
+
+                MessageBox.Show("The quest has been assigned to your team!");
+                NavigationService?.Navigate(new QuestList(quest.QuestBoardId, "Back to Board"));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to assign quest to team: {ex.Message}");
+            }
         }
     }
 }

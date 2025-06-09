@@ -5,7 +5,7 @@ namespace Mas_Project.Data.Repositories;
 
 public class GuildMemberRepository : IGuildMemberRepository
 {
-    private readonly DBContext _context;
+    public readonly DBContext _context;
 
     public GuildMemberRepository(DBContext context)
     {

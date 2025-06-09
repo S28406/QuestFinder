@@ -41,16 +41,24 @@ public static class DataSeeder
         {
             
             var memberForTesting = new GuildMember(
-                username: "TestMember",
+                username: "AAATestMember",
                 email: "TestMember",
-                rank: 1,
+                rank: 3,
+                experiencePoints: 9999,
+                memberRole: MemberRole.RegularMember
+            );
+            var memberForTestingTheTeam = new GuildMember(
+                username: "BBBTestMemberTeam",
+                email: "TestMember",
+                rank: 3,
                 experiencePoints: 9999,
                 memberRole: MemberRole.RegularMember
             );
             
+            
             // Create sample members
             var member1 = new GuildMember(
-                username: "Aaron",
+                username: "Caoimhe",
                 email: "auron@guild.com",
                 rank: 2,
                 experiencePoints: 100,
@@ -58,7 +66,7 @@ public static class DataSeeder
             );
 
             var member2 = new GuildMember(
-                username: "Lina",
+                username: "Siobhan",
                 email: "lina@guild.com",
                 rank: 2,
                 experiencePoints: 200,
@@ -67,7 +75,7 @@ public static class DataSeeder
             
 
             var manager = new GuildMember(
-                username: "August Manager",
+                username: "Niamh Manager",
                 email: "august@guild.com",
                 rank: 5,
                 experiencePoints: 500,
@@ -75,29 +83,32 @@ public static class DataSeeder
             );
 
             var customer = new Customer(
-                username: "August Customer",
+                username: "Seamus Customer",
                 email: "august@guild.com",
                 reputationScore: 100,
                 registrationDate: DateTime.Now
             );
 
             // Save members to get valid references
-            await context.GuildMembers.AddRangeAsync(memberForTesting, member1, member2, manager);
+            await context.GuildMembers.AddRangeAsync(memberForTesting, memberForTestingTheTeam, member1, member2, manager);
             await context.Customers.AddAsync(customer);
             await context.SaveChangesAsync();
 
             // Create a team using the manager (valid by domain rules)
             var team = await teamService.CreateTeamAsync(2, manager.UserID);
+            var testteam = await teamService.CreateTeamAsync(3, manager.UserID);
             await teamService.AddMemberToTeamAsync(team.TeamID, manager.UserID, member2.UserID);
             await teamService.AddMemberToTeamAsync(team.TeamID, manager.UserID, member1.UserID);
+            await teamService.AddMemberToTeamAsync(testteam.TeamID, manager.UserID, memberForTesting.UserID);
+            await teamService.AddMemberToTeamAsync(testteam.TeamID, manager.UserID, memberForTestingTheTeam.UserID);
 
             // Create a quest
             var quest = new Quest(
                 questId: Guid.NewGuid(),
-                title: "Slay the Forest Troll",
+                title: "Slay the Forest Troll (For Singles)",
                 description: "A dangerous troll haunts the woods near the village.",
                 minParticipants: 1,
-                minRank: 2,
+                minRank: 1,
                 durationHours: 5,
                 reward: "100 gold",
                 priority: 2,
@@ -107,10 +118,10 @@ public static class DataSeeder
             );
             var quest2 = new Quest(
                 questId: Guid.NewGuid(),
-                title: "Slay the Forest Troll",
+                title: "Slay the Forest Troll (High Rank)",
                 description: "A dangerous troll haunts the woods near the village.",
                 minParticipants: 2,
-                minRank: 1,
+                minRank: 5,
                 durationHours: 5,
                 reward: "100 gold",
                 priority: 3,

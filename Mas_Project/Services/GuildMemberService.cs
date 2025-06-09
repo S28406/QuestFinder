@@ -1,6 +1,7 @@
 ﻿using Mas_Project.Data.Repositories;
 using Mas_Project.Enums;
 using Mas_Project.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mas_Project.Services;
 
@@ -63,8 +64,12 @@ public class GuildMemberService
 
         team.AddMember(member);
 
+        member.TeamGuid = team.TeamID;
+        await _memberRepo.UpdateAsync(member);
         await _teamRepo.UpdateAsync(team);
+
         await _teamRepo.SaveChangesAsync();
+        await _memberRepo.SaveChangesAsync();
     }
     
     public async Task AssignQuestToMemberAsync(Guid memberId, Quest quest)
@@ -100,8 +105,22 @@ public class GuildMemberService
 
         await _memberRepo.SaveChangesAsync();
     }
+    public async Task<GuildMember?> GetByIdAsync(Guid id)
+    {
+        return await (_memberRepo as GuildMemberRepository)?._context
+            .GuildMembers
+            .AsNoTracking()
+            .FirstOrDefaultAsync(gm => gm.UserID == id);
+    }
     public Guid GetTestUser()
     {
-        return _memberRepo.GetAllAsync().Result.First().UserID;
+        var users = _memberRepo.GetAllAsync().Result.OrderBy(gm => gm.Username);
+        // foreach(var u in users)
+        // {
+        //     Console.WriteLine(u.Username);
+        // }
+        var user = _memberRepo.GetAllAsync().Result.OrderBy(gm => gm.Username).First().UserID;
+        Console.WriteLine(_memberRepo.GetAllAsync().Result.OrderBy(gm => gm.Username).First().Username);
+        return user;
     }
 }
