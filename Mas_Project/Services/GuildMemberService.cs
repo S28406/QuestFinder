@@ -1,4 +1,5 @@
-﻿using Mas_Project.Data.Repositories;
+﻿using Mas_Project.Data.DTOs;
+using Mas_Project.Data.Repositories;
 using Mas_Project.Enums;
 using Mas_Project.Models;
 using Microsoft.EntityFrameworkCore;
@@ -74,9 +75,14 @@ public class GuildMemberService
             .AsNoTracking()
             .FirstOrDefaultAsync(gm => gm.UserID == id);
     }
+
+    public Task<IEnumerable<GuildMemberDTO>> GetMemberDTOs()
+    {
+        return _memberRepo.GetAllIdsAsync();
+    }
     public Guid GetTestUser()
     {
-        var user = _memberRepo.GetAllAsync().Result.OrderBy(gm => gm.Username).First().UserID;
+        var user = _memberRepo.GetAllIdsAsync().Result.OrderBy(gm => gm.Username).First().Id;
         return user;
     }
 }

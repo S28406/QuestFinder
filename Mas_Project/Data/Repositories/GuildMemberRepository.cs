@@ -1,4 +1,5 @@
-﻿using Mas_Project.Models;
+﻿using Mas_Project.Data.DTOs;
+using Mas_Project.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mas_Project.Data.Repositories;
@@ -20,6 +21,17 @@ public class GuildMemberRepository : IGuildMemberRepository
     public async Task<IEnumerable<GuildMember>> GetAllAsync()
     {
         return await _context.GuildMembers.ToListAsync();
+    }
+    public async Task<IEnumerable<GuildMemberDTO>> GetAllIdsAsync()
+    {
+        return await _context.GuildMembers
+            .Select(gm => new GuildMemberDTO
+            {
+                Id = gm.UserID,
+                TeamGuid = gm.TeamGuid,
+                Username = gm.Username
+            })
+            .ToListAsync();
     }
 
     public async Task AddAsync(GuildMember member)

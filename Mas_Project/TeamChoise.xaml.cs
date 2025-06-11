@@ -28,7 +28,7 @@ namespace Mas_Project
         private async void GoAlone_Click(object sender, RoutedEventArgs e)
         {
             // Simulate assigning the currently logged-in user (stubbed here)
-            Guid currentUserId = _guildMemberService.GetTestUser(); // Ensure you have this available
+            Guid currentUserId = _guildMemberService.GetTestUser();
             var quest = await _questService.GetQuestByIdAsync(_questId);
 
             if (quest == null)
@@ -52,7 +52,7 @@ namespace Mas_Project
 
         private async void GoTogether_Click(object sender, RoutedEventArgs e)
         {
-            Guid currentUserId = _guildMemberService.GetTestUser(); // Simulate current user
+            Guid currentUserId = _guildMemberService.GetTestUser();
             var quest = await _questService.GetQuestByIdAsync(_questId);
 
             if (quest == null)
@@ -61,13 +61,15 @@ namespace Mas_Project
                 return;
             }
 
-            var member = await _guildMemberService.GetByIdAsync(currentUserId);
+            var member =  _guildMemberService.GetMemberDTOs().Result
+                .ToList().FirstOrDefault(m => m.Id == currentUserId);
             
             if (member == null)
             {
                 MessageBox.Show("User not found.");
                 return;
             }
+            
             Console.WriteLine($"[DEBUG] member.TeamGuid = {member.TeamGuid}");
 
             // Check team membership
