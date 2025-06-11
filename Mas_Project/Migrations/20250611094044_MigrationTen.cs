@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Mas_Project.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class MigrationTen : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -29,7 +29,9 @@ namespace Mas_Project.Migrations
                 columns: table => new
                 {
                     QuestBoardID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Location = table.Column<string>(type: "TEXT", nullable: false)
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Location = table.Column<string>(type: "TEXT", nullable: false),
+                    ImageUrl = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -112,10 +114,9 @@ namespace Mas_Project.Migrations
                     QuestID = table.Column<Guid>(type: "TEXT", nullable: false),
                     Title = table.Column<string>(type: "TEXT", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
-                    MinNumberOfParticipants = table.Column<int>(type: "INTEGER", nullable: false),
+                    MaxNumberOfParticipants = table.Column<int>(type: "INTEGER", nullable: false),
                     MinRank = table.Column<int>(type: "INTEGER", nullable: false),
                     DurationHours = table.Column<double>(type: "REAL", nullable: false),
-                    EstimatedEndDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Reward = table.Column<string>(type: "TEXT", nullable: false),
                     Priority = table.Column<int>(type: "INTEGER", nullable: false),
                     Type = table.Column<int>(type: "INTEGER", nullable: false),
