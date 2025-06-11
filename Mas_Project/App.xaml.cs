@@ -6,6 +6,7 @@ using Mas_Project.Data.Repositories;
 using Mas_Project.Data.Repositories.Interfaces;
 using Mas_Project.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Mas_Project
 {
@@ -19,7 +20,11 @@ namespace Mas_Project
 
             // Replace with your actual connection string if needed
             services.AddDbContext<DBContext>(options =>
-                options.UseSqlite("Data Source=DataBase.sqlite"));
+                options.UseSqlite("Data Source=DataBase.sqlite")
+                // Uncomment for queries
+                    // .LogTo(Console.WriteLine, LogLevel.Information)
+                    // .EnableSensitiveDataLogging()
+                );
 
             // Register all services
             services.AddScoped<GuildMemberService>();

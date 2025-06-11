@@ -32,13 +32,6 @@
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,20,0">
                     <TextBlock Text="QuestHub" Foreground="White" FontSize="18" FontWeight="Bold" />
                 </StackPanel>
-
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" DockPanel.Dock="Right" Margin="20">
-                    <TextBlock Text="Home" Foreground="White" FontSize="14" Margin="10,0"/>
-                    <TextBlock Text="Quests" Foreground="White" FontSize="14" Margin="10,0"/>
-                    <TextBlock Text="Characters" Foreground="White" FontSize="14" Margin="10,0"/>
-                    <TextBlock Text="Guild" Foreground="White" FontSize="14" Margin="10,0"/>
-                </StackPanel>
             </DockPanel>
 
             <!-- Title & Description -->
@@ -50,9 +43,37 @@
 
             <!-- Filters -->
             <StackPanel Orientation="Horizontal" Margin="0,0,0,30">
-                <Button Content="Rank" Style="{StaticResource FilterButtonStyle}" />
-                <Button Content="Category" Style="{StaticResource FilterButtonStyle}" />
-                <Button Content="Rewards" Style="{StaticResource FilterButtonStyle}" />
+                <Button Content="Rank"
+                        Style="{StaticResource FilterButtonStyle}"
+                        Click="RankFilter_Click" />
+                <ComboBox x:Name="RankComboBox"
+                          Width="100"
+                          Visibility="Collapsed"
+                          SelectionChanged="RankComboBox_SelectionChanged"
+                          Margin="10,0,0,0">
+                    <ComboBoxItem Content="1" />
+                    <ComboBoxItem Content="2" />
+                    <ComboBoxItem Content="3" />
+                    <ComboBoxItem Content="4" />
+                    <ComboBoxItem Content="5" />
+                </ComboBox>
+                <Button Content="Category"
+                        Style="{StaticResource FilterButtonStyle}"
+                        Click="CategoryFilter_Click" />
+                <ComboBox x:Name="CategoryComboBox"
+                          Width="150"
+                          Visibility="Collapsed"
+                          SelectionChanged="CategoryComboBox_SelectionChanged"
+                          Margin="10,0,0,0">
+                    <ComboBoxItem Content="SlayTheMonsters" />
+                    <ComboBoxItem Content="FetchTheTreasure" />
+                    <ComboBoxItem Content="DeliverTheArtifact" />
+                    <ComboBoxItem Content="ConvoyTheNoble" />
+                </ComboBox>
+                <Button Content="Reset Filters"
+                        Style="{StaticResource FilterButtonStyle}"
+                        Click="ResetFilters_Click"
+                        Margin="10,0,0,0" />
             </StackPanel>
 
             <!-- Quest List -->
@@ -74,15 +95,6 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-
-            <!-- Pagination (Optional Placeholder) -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,30,0,0">
-                <Button Content="⟨" Width="36" Height="36" Background="Transparent" Foreground="White" BorderThickness="0" />
-                <Button Content="1" Width="36" Height="36" Background="#2c3035" Foreground="White" BorderThickness="0" FontWeight="Bold" />
-                <Button Content="2" Width="36" Height="36" Background="Transparent" Foreground="White" BorderThickness="0" />
-                <Button Content="⟩" Width="36" Height="36" Background="Transparent" Foreground="White" BorderThickness="0" />
-            </StackPanel>
-
         </StackPanel>
     </ScrollViewer>
 </Page>

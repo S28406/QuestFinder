@@ -126,10 +126,7 @@ namespace Mas_Project.Migrations
                     b.Property<double>("DurationHours")
                         .HasColumnType("REAL");
 
-                    b.Property<DateTime>("EstimatedEndDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("MinNumberOfParticipants")
+                    b.Property<int>("MaxNumberOfParticipants")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("MinRank")

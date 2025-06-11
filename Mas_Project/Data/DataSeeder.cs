@@ -102,13 +102,13 @@ public static class DataSeeder
             await teamService.AddMemberToTeamAsync(testteam.TeamID, manager.UserID, memberForTesting.UserID);
             await teamService.AddMemberToTeamAsync(testteam.TeamID, manager.UserID, memberForTestingTheTeam.UserID);
 
-            // Create a quest
+            // Create  quests
             var quest = new Quest(
                 questId: Guid.NewGuid(),
-                title: "Slay the Forest Troll (For Singles)",
+                title: "Test Quest",
                 description: "A dangerous troll haunts the woods near the village.",
-                minParticipants: 1,
-                minRank: 1,
+                maxParticipants: 1,
+                minRank: 2,
                 durationHours: 5,
                 reward: "100 gold",
                 priority: 2,
@@ -120,7 +120,7 @@ public static class DataSeeder
                 questId: Guid.NewGuid(),
                 title: "Slay the Forest Troll (High Rank)",
                 description: "A dangerous troll haunts the woods near the village.",
-                minParticipants: 2,
+                maxParticipants: 2,
                 minRank: 5,
                 durationHours: 5,
                 reward: "100 gold",
@@ -131,14 +131,27 @@ public static class DataSeeder
             );
             var quest3 = new Quest(
                 questId: Guid.NewGuid(),
-                title: "Slay the Forest Troll",
+                title: "Slay the Forest Troll (Full)",
                 description: "A dangerous troll haunts the woods near the village.",
-                minParticipants: 2,
+                maxParticipants: 2,
                 minRank: 1,
                 durationHours: 5,
                 reward: "100 gold",
                 priority: 1,
                 type: QuestType.SlayTheMonsters,
+                requirements: "No Additional Requirments",
+                status: QuestStatus.Full
+            );
+            var quest4 = new Quest(
+                questId: Guid.NewGuid(),
+                title: "Fetch some feathers",
+                description: "Fetch the feathers from the fenix",
+                maxParticipants: 1,
+                minRank: 4,
+                durationHours: 5,
+                reward: "1000 gold",
+                priority: 7,
+                type: QuestType.FetchTheTreasure,
                 requirements: "No Additional Requirments",
                 status: QuestStatus.Created
             );
@@ -149,6 +162,7 @@ public static class DataSeeder
             await questService.CreateAndAssignQuestAsync(board.QuestBoardID, customer.UserID, quest);
             await questService.CreateAndAssignQuestAsync(board.QuestBoardID, customer.UserID, quest2);
             await questService.CreateAndAssignQuestAsync(board.QuestBoardID, customer.UserID, quest3);
+            await questService.CreateAndAssignQuestAsync(board.QuestBoardID, customer.UserID, quest4);
             
             await guildMemberService.AssignQuestToMemberAsync(member1.UserID, quest);
             await guildMemberService.AssignQuestToMemberAsync(member2.UserID, quest);

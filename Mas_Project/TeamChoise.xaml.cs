@@ -46,6 +46,7 @@ namespace Mas_Project
             catch (Exception ex)
             {
                 MessageBox.Show($"Failed to take the quest: {ex.Message}");
+                NavigationService?.Navigate(new QuestList(quest.QuestBoardId, "Back to Board"));
             }
         }
 
@@ -84,13 +85,13 @@ namespace Mas_Project
             }
 
             // Check if the team meets the requirements
-            if (team.Members.Count < quest.MinNumberOfParticipants)
+            if (team.Members.Count < quest.MaxNumberOfParticipants)
             {
                 MessageBox.Show("Team does not meet the required number of participants.");
                 return;
             }
 
-            if (team.Members.Any(m => m.Rank < quest.MinRank))
+            if (team.Rank < quest.MinRank)
             {
                 MessageBox.Show("The team doesnt meet the rank requirement.");
                 return;

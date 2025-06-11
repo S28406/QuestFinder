@@ -7,7 +7,6 @@ namespace Mas_Project.Models;
 
 public class Quest
 {
-    //
     [Key]
     [Required]
     public Guid QuestID { get; set; }
@@ -18,13 +17,22 @@ public class Quest
     [MinLength(3)]
     public string Description { get; set; }
     [Required]
-    public int MinNumberOfParticipants { get; set; }
+    public int MaxNumberOfParticipants { get; set; }
     public int MinRank { get; set; }
+    private double _DurationHours;
     [Required]
-    public double DurationHours { get; set; }
-    [Required]
-    [DataType(DataType.Date)]
-    public DateTime EstimatedEndDate { get; set; }
+    public double DurationHours
+    {
+        get => _DurationHours;
+        set
+        {
+            if (value < 1 || value > 240)
+                throw new ArgumentException("Duration vannot be more than 240 hours");
+            _DurationHours = value;
+        }
+    }
+    [DataType(DataType.Date)] 
+    public DateTime EstimatedEndDate => DateTime.Now.AddHours(DurationHours);
     [Required]
     [MinLength(3)]
     public string Reward { get; set; }
@@ -47,29 +55,22 @@ public class Quest
     
     
     public Quest(){}
-    public Quest(Guid questId, string title, string description, int minParticipants, int minRank,
+    public Quest(Guid questId, string title, string description, int maxParticipants, int minRank,
         double durationHours, string reward, int priority, QuestType type,
         string requirements, QuestStatus status)
     {
         QuestID = questId;
         Title = title;
         Description = description;
-        MinNumberOfParticipants = minParticipants;
+        MaxNumberOfParticipants = maxParticipants;
         MinRank = minRank;
         DurationHours = durationHours;
-        EstimatedEndDate = DateTime.Now.AddHours(durationHours);
         Reward = reward;
         Priority = priority;
         Type = type;
         Requirements = requirements;
         Status = status;
     }
-
-    public bool CheckPlayerReq(GuildMember player) =>
-        player.Rank >= MinRank;
-
-    public bool CheckTeamReq(List<GuildMember> team) =>
-        team.Count >= MinNumberOfParticipants;
 
     public void UpdateStatus(QuestStatus newStatus) =>
         Status = newStatus;

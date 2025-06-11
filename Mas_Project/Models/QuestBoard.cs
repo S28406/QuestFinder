@@ -26,16 +26,4 @@ public class QuestBoard
         Location = location;
         Name = name;
     }
-
-    public List<Quest> GetAllQuests() => Quests as List<Quest>;
-
-    public List<Quest> FilterQuestsByRank(int rank)
-    {
-        return Quests.Where(q => q.MinRank == rank).ToList();
-    }
-
-    public void AddQuest(Quest quest)
-    {
-        Quests.Add(quest);
-    }
 }

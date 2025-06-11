@@ -1,47 +1,19 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using Mas_Project.Enums;
+using Mas_Project.Models;
 using Mas_Project.Services;
 using Mas_Project.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Mas_Project;
 
-// public partial class QuestList : Page
-// {
-//     // public QuestList()
-//     // {
-//     //     InitializeComponent();
-//     //     DataContext = App.ServiceProvider.GetRequiredService<QuestBoardViewModel>();
-//     // }
-//     private readonly QuestService _questService;
-//     private readonly Guid _questBoardId;
-//
-//     public QuestList(Guid questBoardId)
-//     {
-//         InitializeComponent();
-//         _questBoardId = questBoardId;
-//         _questService = App.ServiceProvider.GetRequiredService<QuestService>();
-//
-//         Loaded += QuestList_Loaded;
-//     }
-//
-//     private async void QuestList_Loaded(object sender, RoutedEventArgs e)
-//     {
-//         var allQuests = await _questService.GetAllAsync();
-//         var questsForBoard = allQuests.Where(q => q.QuestBoardId == _questBoardId).ToList();
-//
-//         if (questsForBoard.Count == 0)
-//             Console.WriteLine($"[DEBUG] No quests found for board {_questBoardId}");
-//
-//         QuestItemsControl.ItemsSource = questsForBoard;
-//     }
-// }
-
 public partial class QuestList : Page
 {
     private readonly QuestService _questService;
     private readonly Guid _questBoardId;
     private readonly string _boardName;
+    private List<Quest> _allBoardQuests = new();
 
     public QuestList(Guid questBoardId, string boardName)
     {
@@ -53,18 +25,17 @@ public partial class QuestList : Page
 
         Loaded += QuestList_Loaded;
     }
-
     private async void QuestList_Loaded(object sender, RoutedEventArgs e)
     {
         PageTitle.Text = $"Available Quests - {_boardName}";
 
         var allQuests = await _questService.GetAllAsync();
-        var boardQuests = allQuests.Where(q => q.QuestBoardId == _questBoardId).ToList();
+        _allBoardQuests = allQuests.Where(q => q.QuestBoardId == _questBoardId).ToList();
 
-        if (boardQuests.Count == 0)
+        if (_allBoardQuests.Count == 0)
             Console.WriteLine($"[DEBUG] No quests found for board {_questBoardId}");
 
-        QuestItemsControl.ItemsSource = boardQuests;
+        QuestItemsControl.ItemsSource = _allBoardQuests;
     }
     private void ViewQuest_Click(object sender, RoutedEventArgs e)
     {
@@ -72,5 +43,49 @@ public partial class QuestList : Page
         {
             NavigationService?.Navigate(new QuestDescription(questId));
         }
+    }
+    
+    private void RankFilter_Click(object sender, RoutedEventArgs e)
+    {
+        // Toggle ComboBox visibility
+        RankComboBox.Visibility = RankComboBox.Visibility == Visibility.Visible
+            ? Visibility.Collapsed
+            : Visibility.Visible;
+    }
+
+    private void RankComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (RankComboBox.SelectedItem is ComboBoxItem selectedItem
+            && int.TryParse(selectedItem.Content.ToString(), out int selectedRank))
+        {
+            var filtered = _allBoardQuests.Where(q => q.MinRank <= selectedRank).ToList();
+            QuestItemsControl.ItemsSource = filtered;
+        }
+    }
+    
+    private void CategoryFilter_Click(object sender, RoutedEventArgs e)
+    {
+        CategoryComboBox.Visibility = CategoryComboBox.Visibility == Visibility.Visible
+            ? Visibility.Collapsed
+            : Visibility.Visible;
+    }
+    
+    private void CategoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (CategoryComboBox.SelectedItem is ComboBoxItem selectedItem &&
+            Enum.TryParse<QuestType>(selectedItem.Content.ToString(), out var selectedType))
+        {
+            var filtered = _allBoardQuests.Where(q => q.Type == selectedType).ToList();
+            QuestItemsControl.ItemsSource = filtered;
+        }
+    }
+    
+    private void ResetFilters_Click(object sender, RoutedEventArgs e)
+    {
+        RankComboBox.SelectedIndex = -1;
+        CategoryComboBox.SelectedIndex = -1;
+        RankComboBox.Visibility = Visibility.Collapsed;
+        CategoryComboBox.Visibility = Visibility.Collapsed;
+        QuestItemsControl.ItemsSource = _allBoardQuests;
     }
 }
