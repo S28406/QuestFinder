@@ -21,11 +21,6 @@ public class TeamService
         return await _teamRepo.GetByIdAsync(teamId);
     }
 
-    public async Task<IEnumerable<Team>> GetAllTeamsAsync()
-    {
-        return await _teamRepo.GetAllAsync();
-    }
-
     public async Task<Team> CreateTeamAsync(int rank, Guid memberId)
     {
         var manager = await _memberRepo.GetByIdAsync(memberId);

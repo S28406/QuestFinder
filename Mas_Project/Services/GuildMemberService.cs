@@ -37,7 +37,6 @@ public class GuildMemberService
         if (member == null) throw new ArgumentException("Member not found.");
         if (quest.Status == QuestStatus.Full) throw new ArgumentException("The quest is full");
         
-
         bool alreadyTaken = quest.DateTakens.Any(dt => dt.GuildMemberId == memberId);
         if (member.Rank < quest.MinRank)
         {
@@ -85,4 +84,6 @@ public class GuildMemberService
         var user = _memberRepo.GetAllIdsAsync().Result.OrderBy(gm => gm.Username).First().Id;
         return user;
     }
+    
+    
 }

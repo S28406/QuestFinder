@@ -34,8 +34,6 @@ public static class DataSeeder
     )
     {
         Clean(context);
-        // await context.Database.MigrateAsync();
-        // Seed only if empty
         if (!context.GuildMembers.Any())
         {
             
@@ -165,10 +163,10 @@ public static class DataSeeder
             var board = await questBoardService.AddBoardAsync("Town Center", "Eldoria Forest");
             var board2 = await questBoardService.AddBoardAsync("East Plains", "Ironpeak Mountains");
             Console.WriteLine($"[SEEDING] QuestBoardID: {board.QuestBoardID}");
-            await questService.CreateAndAssignQuestAsync(board.QuestBoardID, customer.UserID, quest);
-            await questService.CreateAndAssignQuestAsync(board.QuestBoardID, customer.UserID, quest2);
-            await questService.CreateAndAssignQuestAsync(board.QuestBoardID, customer.UserID, quest3);
-            await questService.CreateAndAssignQuestAsync(board.QuestBoardID, customer.UserID, quest4);
+            await questService.CreateQuestAsync(board.QuestBoardID, customer.UserID, quest);
+            await questService.CreateQuestAsync(board.QuestBoardID, customer.UserID, quest2);
+            await questService.CreateQuestAsync(board.QuestBoardID, customer.UserID, quest3);
+            await questService.CreateQuestAsync(board.QuestBoardID, customer.UserID, quest4);
             
             await guildMemberService.AssignQuestToMemberAsync(member1.UserID, quest);
             await guildMemberService.AssignQuestToMemberAsync(member2.UserID, quest);

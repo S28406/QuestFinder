@@ -29,9 +29,8 @@ public class QuestService
     {
         return await _questRepo.GetAllAsync();
     }
-
     
-    public async Task<Quest> CreateAndAssignQuestAsync(Guid boardId, Guid customerId, Quest quest)
+    public async Task<Quest> CreateQuestAsync(Guid boardId, Guid customerId, Quest quest)
     {
         var board = await _questBoardRepo.GetByIdAsync(boardId);
         if (board.Quests.Any(q => q.Priority == quest.Priority))
