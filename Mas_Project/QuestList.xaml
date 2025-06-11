@@ -26,7 +26,15 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" Background="#121416">
         <StackPanel Margin="40" Background="#121416">
-
+            <Button Content="← Back to Quest Boards"
+                    Click="BackButton_Click"
+                    Background="Transparent"
+                    Foreground="#dce8f3"
+                    BorderBrush="Transparent"
+                    HorizontalAlignment="Left"
+                    Padding="6,2"
+                    FontSize="14"
+                    Cursor="Hand"/>
             <!-- Header -->
             <DockPanel LastChildFill="True" Margin="0,0,0,20">
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center" Margin="0,0,20,0">

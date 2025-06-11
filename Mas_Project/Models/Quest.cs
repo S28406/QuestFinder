@@ -31,7 +31,6 @@ public class Quest
             _DurationHours = value;
         }
     }
-    [DataType(DataType.Date)] 
     public DateTime EstimatedEndDate => DateTime.Now.AddHours(DurationHours);
     [Required]
     [MinLength(3)]

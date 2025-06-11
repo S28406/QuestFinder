@@ -12,19 +12,21 @@ namespace Mas_Project
     public partial class QuestDescription : Page
     {
         private readonly QuestService _questService;
-        private readonly GuildMemberService _memberService;
         private readonly Guid _questId;
 
         public QuestDescription(Guid questId)
         {
             InitializeComponent();
             _questService = App.ServiceProvider.GetRequiredService<QuestService>();
-            _memberService = App.ServiceProvider.GetRequiredService<GuildMemberService>();
             _questId = questId;
 
             Loaded += QuestDescription_Loaded;
         }
-
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (NavigationService?.CanGoBack == true)
+                NavigationService.GoBack();
+        }
         private async void QuestDescription_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             var quest = await _questService.GetByIdAsync(_questId);
@@ -42,7 +44,7 @@ namespace Mas_Project
             RequirementsText.Text = $"Requirements: {quest.Requirements}";
             RankText.Text = $"Minimum Rank: {quest.MinRank}";
 
-            var participants = quest.DateTakens.Select(dt => dt.GuildMember).ToList();
+            var participants = quest.Participants;
             ParticipantsList.ItemsSource = participants;
         }
         private void TakeQuest_Click(object sender, RoutedEventArgs e)

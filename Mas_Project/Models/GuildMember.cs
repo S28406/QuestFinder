@@ -22,8 +22,7 @@ public class GuildMember : User, IGuildManager, IGuildMaster
         }
     }
 
-    [Required]
-    public MemberRole MemberRole { get; set; }
+    [Required] public ICollection<MemberRole> MemberRoles { get; set; } = new HashSet<MemberRole>();
     public string? Relic { get; set; }
     public string? LeadershipStyle { get; set; }
     public int? AssignedRoom { get; set; }
@@ -36,12 +35,12 @@ public class GuildMember : User, IGuildManager, IGuildMaster
     public GuildMember(){}
 
     public GuildMember(string username, string? email, int rank, int experiencePoints,
-        MemberRole memberRole, string? relic = null, string? leadershipStyle = null, int? assignedRoom = null)
+        ICollection<MemberRole> memberRole, string? relic = null, string? leadershipStyle = null, int? assignedRoom = null)
         : base(username, email)
     {
         Rank = rank;
         ExperiencePoints = experiencePoints;
-        MemberRole = memberRole;
+        MemberRoles = memberRole;
         Relic = relic;
         LeadershipStyle = leadershipStyle;
         AssignedRoom = assignedRoom;
@@ -53,6 +52,4 @@ public class GuildMember : User, IGuildManager, IGuildMaster
     }
 
     public void Attack() { /* implement local logic */ }
-    public void ViewQuests() { /* implement local logic */ }
-    public void TakeQuest() { /* implement local logic */ }
 }

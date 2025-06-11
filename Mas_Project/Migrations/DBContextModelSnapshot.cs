@@ -252,8 +252,9 @@ namespace Mas_Project.Migrations
                     b.Property<string>("LeadershipStyle")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("MemberRole")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("MemberRoles")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("Rank")
                         .HasColumnType("INTEGER");

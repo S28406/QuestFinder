@@ -53,9 +53,6 @@
                     <DataTemplate>
                         <StackPanel Margin="10" MouseLeftButtonUp="Board_Click" Cursor="Hand">
                             <Border Height="120" CornerRadius="12">
-                                <Border.Background>
-                                    <ImageBrush ImageSource="{Binding ImagePath}" />
-                                </Border.Background>
                             </Border>
                             <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="Bold" />
                             <TextBlock Text="{Binding Description}" Foreground="LightGray" FontSize="12" TextWrapping="Wrap"/>

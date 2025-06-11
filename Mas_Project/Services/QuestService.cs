@@ -1,4 +1,5 @@
-﻿using Mas_Project.Models;
+﻿using Mas_Project.Data.DTOs;
+using Mas_Project.Models;
 using Mas_Project.Enums;
 using Mas_Project.Data.Repositories.Interfaces;
 
@@ -15,9 +16,13 @@ public class QuestService
         _questBoardRepo = questBoardRepo;
     }
 
-    public async Task<Quest?> GetByIdAsync(Guid id)
+    public async Task<QuestDTO?> GetByIdAsync(Guid id)
     {
         return await _questRepo.GetByIdAsync(id);
+    }
+    public async Task<Quest?> GetQuestByIdAsync(Guid id)
+    {
+        return _questRepo.GetQuestByIdAsync(id);
     }
 
     public async Task<IEnumerable<Quest>> GetAllAsync()
@@ -40,7 +45,7 @@ public class QuestService
 
     public async Task UpdateQuestStatusAsync(Guid questId, QuestStatus newStatus)
     {
-        var quest = await _questRepo.GetByIdAsync(questId);
+        var quest = _questRepo.GetQuestByIdAsync(questId);
         if (quest == null) throw new ArgumentException("Quest not found.");
 
         quest.UpdateStatus(newStatus);

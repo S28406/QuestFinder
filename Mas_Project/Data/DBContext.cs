@@ -1,4 +1,5 @@
-﻿using Mas_Project.Models;
+﻿using Mas_Project.Enums;
+using Mas_Project.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Mas_Project.Data
@@ -40,6 +41,11 @@ namespace Mas_Project.Data
             modelBuilder.Entity<Quest>()
                 .HasIndex(q => new { q.QuestBoardId, q.Priority })
                 .IsUnique();
+
+            modelBuilder.Entity<GuildMember>().Property(gm => gm.MemberRoles)
+                .HasConversion(v => string.Join(",", v),
+                    v => v.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                        .Select(Enum.Parse<MemberRole>).ToList());
             
 
             // === Team → GuildMembers ===

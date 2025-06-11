@@ -34,52 +34,58 @@ public static class DataSeeder
     )
     {
         Clean(context);
-        // Ensure the database and tables exist
-        await context.Database.MigrateAsync();
+        // await context.Database.MigrateAsync();
         // Seed only if empty
         if (!context.GuildMembers.Any())
         {
             
-            var memberForTesting = new GuildMember(
+            var memberForTesting = new Warrior(
                 username: "AAATestMember",
                 email: "TestMember",
-                rank: 3,
+                rank: 4,
                 experiencePoints: 9999,
-                memberRole: MemberRole.RegularMember
+                memberRole: [MemberRole.RegularMember],
+                armorClass: 5
             );
-            var memberForTestingTheTeam = new GuildMember(
+            var memberForTestingTheTeam = new Mage(
                 username: "BBBTestMemberTeam",
                 email: "TestMember",
                 rank: 3,
                 experiencePoints: 9999,
-                memberRole: MemberRole.RegularMember
+                memberRole: [MemberRole.RegularMember],
+                mp: 250
             );
             
             
             // Create sample members
-            var member1 = new GuildMember(
+            var member1 = new Priest(
                 username: "Caoimhe",
                 email: "auron@guild.com",
                 rank: 2,
                 experiencePoints: 100,
-                memberRole: MemberRole.RegularMember
+                memberRole: [MemberRole.RegularMember],
+                divinePower: 100
             );
 
-            var member2 = new GuildMember(
+            var member2 = new Warrior(
                 username: "Siobhan",
                 email: "lina@guild.com",
                 rank: 2,
                 experiencePoints: 200,
-                memberRole: MemberRole.RegularMember
+                memberRole: [MemberRole.RegularMember],
+                armorClass: 100
             );
             
 
-            var manager = new GuildMember(
+            var manager = new Warrior(
                 username: "Niamh Manager",
                 email: "august@guild.com",
                 rank: 5,
                 experiencePoints: 500,
-                memberRole: MemberRole.GuildManager
+                memberRole: [MemberRole.GuildManager],
+                armorClass: 100,
+                assignedRoom: 15
+                
             );
 
             var customer = new Customer(

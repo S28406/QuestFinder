@@ -29,7 +29,7 @@ namespace Mas_Project
         {
             // Simulate assigning the currently logged-in user (stubbed here)
             Guid currentUserId = _guildMemberService.GetTestUser(); // Ensure you have this available
-            var quest = await _questService.GetByIdAsync(_questId);
+            var quest = await _questService.GetQuestByIdAsync(_questId);
 
             if (quest == null)
             {
@@ -53,7 +53,7 @@ namespace Mas_Project
         private async void GoTogether_Click(object sender, RoutedEventArgs e)
         {
             Guid currentUserId = _guildMemberService.GetTestUser(); // Simulate current user
-            var quest = await _questService.GetByIdAsync(_questId);
+            var quest = await _questService.GetQuestByIdAsync(_questId);
 
             if (quest == null)
             {

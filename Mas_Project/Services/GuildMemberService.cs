@@ -9,7 +9,7 @@ public class GuildMemberService
 {
     private readonly IGuildMemberRepository _memberRepo;
 
-    public GuildMemberService(IGuildMemberRepository memberRepo, ITeamRepository teamRepo)
+    public GuildMemberService(IGuildMemberRepository memberRepo)
     {
         _memberRepo = memberRepo;
     }
@@ -22,53 +22,13 @@ public class GuildMemberService
         if (promoter == null || target == null)
             throw new ArgumentException("One or both guild members not found.");
 
-        if (promoter.MemberRole != MemberRole.GuildMaster)
+        if (!promoter.MemberRoles.Contains(MemberRole.GuildMaster))
             throw new InvalidOperationException("Only a Guild Master can promote.");
 
-        target.Promote(); // calls model method
+        target.Promote();
         await _memberRepo.UpdateAsync(target);
         await _memberRepo.SaveChangesAsync();
     }
-    //
-    // public async Task<Team> CreateTeamAsync(Guid managerId, int rank)
-    // {
-    //     var manager = await _memberRepo.GetByIdAsync(managerId);
-    //     if (manager == null)
-    //         throw new ArgumentException("Guild manager not found.");
-    //
-    //     if (manager.MemberRole != MemberRole.GuildManager)
-    //         throw new InvalidOperationException("Only a Guild Manager can create teams.");
-    //
-    //     var team = new Team(Guid.NewGuid(), rank);
-    //     team.AddMember(manager);
-    //
-    //     await _teamRepo.AddAsync(team);
-    //     await _teamRepo.SaveChangesAsync();
-    //
-    //     return team;
-    // }
-    //
-    // public async Task AddMemberToTeamAsync(Guid managerId, Guid memberId, Guid teamId)
-    // {
-    //     var manager = await _memberRepo.GetByIdAsync(managerId);
-    //     var member = await _memberRepo.GetByIdAsync(memberId);
-    //     var team = await _teamRepo.GetByIdAsync(teamId);
-    //
-    //     if (manager == null || member == null || team == null)
-    //         throw new ArgumentException("Missing guild member or team.");
-    //
-    //     if (manager.MemberRole != MemberRole.GuildManager)
-    //         throw new InvalidOperationException("Only a Guild Manager can add members to a team.");
-    //
-    //     team.AddMember(member);
-    //
-    //     member.TeamGuid = team.TeamID;
-    //     await _memberRepo.UpdateAsync(member);
-    //     await _teamRepo.UpdateAsync(team);
-    //
-    //     await _teamRepo.SaveChangesAsync();
-    //     await _memberRepo.SaveChangesAsync();
-    // }
     
     public async Task AssignQuestToMemberAsync(Guid memberId, Quest quest)
     {
@@ -101,9 +61,10 @@ public class GuildMemberService
         {
             throw new InvalidOperationException("This member has already taken the quest.");
         }
-        int numberOfParticipants = quest.DateTakens.Count;
+        int numberOfParticipants = quest.DateTakens
+            .Count(dt => dt.Date.AddHours(quest.DurationHours) > DateTime.Now);
         if (quest.Status == QuestStatus.Created) quest.Status = QuestStatus.Taken;
-        if(numberOfParticipants + 1 == quest.MaxNumberOfParticipants) quest.Status = QuestStatus.Completed;
+        if(numberOfParticipants + 1 == quest.MaxNumberOfParticipants) quest.Status = QuestStatus.Full;
         await _memberRepo.SaveChangesAsync();
     }
     public async Task<GuildMember?> GetByIdAsync(Guid id)
@@ -115,13 +76,7 @@ public class GuildMemberService
     }
     public Guid GetTestUser()
     {
-        var users = _memberRepo.GetAllAsync().Result.OrderBy(gm => gm.Username);
-        // foreach(var u in users)
-        // {
-        //     Console.WriteLine(u.Username);
-        // }
         var user = _memberRepo.GetAllAsync().Result.OrderBy(gm => gm.Username).First().UserID;
-        Console.WriteLine(_memberRepo.GetAllAsync().Result.OrderBy(gm => gm.Username).First().Username);
         return user;
     }
 }

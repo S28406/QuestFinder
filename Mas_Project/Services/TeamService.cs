@@ -33,7 +33,7 @@ public class TeamService
         if (manager == null)
             throw new ArgumentException("Member not found.");
 
-        if (manager.MemberRole != MemberRole.GuildManager)
+        if (!manager.MemberRoles.Contains(MemberRole.GuildManager))
             throw new InvalidOperationException("Only a Guild Manager can create teams.");
         
         var team = new Team(Guid.NewGuid(), rank);
@@ -51,7 +51,7 @@ public class TeamService
         if (manager == null || member == null || team == null)
             throw new ArgumentException("Team or member not found.");
 
-        if (manager.MemberRole != MemberRole.GuildManager)
+        if (!manager.MemberRoles.Contains(MemberRole.GuildManager))
             throw new InvalidOperationException("Only a Guild Manager can add members to teams.");
 
         

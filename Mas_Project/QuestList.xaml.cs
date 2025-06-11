@@ -88,4 +88,9 @@ public partial class QuestList : Page
         CategoryComboBox.Visibility = Visibility.Collapsed;
         QuestItemsControl.ItemsSource = _allBoardQuests;
     }
+    private void BackButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (NavigationService?.CanGoBack == true)
+            NavigationService.GoBack();
+    }
 }
