@@ -55,7 +55,6 @@ public static class DataSeeder
             );
             
             
-            // Create sample members
             var member1 = new Priest(
                 username: "Caoimhe",
                 email: "auron@guild.com",
@@ -93,12 +92,10 @@ public static class DataSeeder
                 registrationDate: DateTime.Now
             );
 
-            // Save members to get valid references
             await context.GuildMembers.AddRangeAsync(memberForTesting, memberForTestingTheTeam, member1, member2, manager);
             await context.Customers.AddAsync(customer);
             await context.SaveChangesAsync();
 
-            // Create a team using the manager (valid by domain rules)
             var team = await teamService.CreateTeamAsync(2, manager.UserID);
             var testteam = await teamService.CreateTeamAsync(3, manager.UserID);
             await teamService.AddMemberToTeamAsync(team.TeamID, manager.UserID, member2.UserID);
@@ -106,7 +103,6 @@ public static class DataSeeder
             await teamService.AddMemberToTeamAsync(testteam.TeamID, manager.UserID, memberForTesting.UserID);
             await teamService.AddMemberToTeamAsync(testteam.TeamID, manager.UserID, memberForTestingTheTeam.UserID);
 
-            // Create  quests
             var quest = new Quest(
                 questId: Guid.NewGuid(),
                 title: "Test Quest",
@@ -172,7 +168,6 @@ public static class DataSeeder
             await guildMemberService.AssignQuestToMemberAsync(member2.UserID, quest);
     
 
-            // Create quest board and attach quest
             await context.SaveChangesAsync();
         }
     }

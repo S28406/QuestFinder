@@ -27,7 +27,6 @@ namespace Mas_Project
 
         private async void GoAlone_Click(object sender, RoutedEventArgs e)
         {
-            // Simulate assigning the currently logged-in user (stubbed here)
             Guid currentUserId = _guildMemberService.GetTestUser();
             var quest = await _questService.GetQuestByIdAsync(_questId);
 

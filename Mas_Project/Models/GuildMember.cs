@@ -51,5 +51,5 @@ public class GuildMember : User, IGuildManager, IGuildMaster
         Rank += 1;
     }
 
-    public void Attack() { /* implement local logic */ }
+    public void Attack() { Console.WriteLine("The member attacked"); }
 }

@@ -61,7 +61,7 @@ public class QuestBoardViewModel : INotifyPropertyChanged
 
     public async Task LoadQuestsAsync()
     {
-        var questList = await _questBoardService.GetAllQuestsAsync(/* boardId */ Guid.Parse("YOUR_BOARD_ID_HERE"));
+        var questList = await _questBoardService.GetAllQuestsAsync( Guid.Parse("YOUR_BOARD_ID_HERE"));
         Quests.Clear();
         foreach (var quest in questList)
             Quests.Add(quest);

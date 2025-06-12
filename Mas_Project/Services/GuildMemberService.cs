@@ -30,6 +30,19 @@ public class GuildMemberService
         await _memberRepo.UpdateAsync(target);
         await _memberRepo.SaveChangesAsync();
     }
+
+    public void ChangeRole( Guid memberId, List<MemberRole> memberRoles)
+    {
+        var member =  _memberRepo.GetByIdAsync(memberId);
+        member.Result.MemberRoles = memberRoles;
+    }
+    public void Role( Guid memberId, MemberRole memberRole)
+    {
+        var member =  _memberRepo.GetByIdAsync(memberId);
+        member.Result.MemberRoles.Add(memberRole);
+    }
+    
+    
     
     public async Task AssignQuestToMemberAsync(Guid memberId, Quest quest)
     {

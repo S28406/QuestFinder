@@ -31,7 +31,6 @@ namespace Mas_Project.Data
             
             base.OnModelCreating(modelBuilder);
 
-            // === Quest → Customer ===
             modelBuilder.Entity<Quest>()
                 .HasOne(q => q.QuestBoard)
                 .WithMany(qb => qb.Quests)
@@ -48,7 +47,6 @@ namespace Mas_Project.Data
                         .Select(Enum.Parse<MemberRole>).ToList());
             
 
-            // === Team → GuildMembers ===
             modelBuilder.Entity<Team>()
                 .HasMany(t => t.Members)
                 .WithMany();
@@ -79,7 +77,6 @@ namespace Mas_Project.Data
                 .HasForeignKey(dt => dt.QuestId);
             
 
-            // === Primary Keys ===
             modelBuilder.Entity<User>().HasKey(u => u.UserID);
             modelBuilder.Entity<Team>().HasKey(t => t.TeamID);
             modelBuilder.Entity<Quest>().HasKey(q => q.QuestID);

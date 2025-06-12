@@ -13,31 +13,6 @@ public class QuestRepository : IQuestRepository
     {
         _context = context;
     }
-
-    // public async Task<QuestDTO?> GetByIdAsync(Guid id)
-    // {
-    //     return await _context.Quests
-    //         .Where(q => q.QuestID == id)
-    //         .Select(q => new QuestDTO
-    //         {
-    //             QuestID = q.QuestID,
-    //             Title = q.Title,
-    //             Description = q.Description,
-    //             Reward = q.Reward,
-    //             MinRank = q.MinRank,
-    //             DurationHours = q.DurationHours,
-    //             Requirements = q.Requirements,
-    //             Participants = q.DateTakens
-    //                 .Where(dt => dt.Date.AddHours(q.DurationHours) > DateTime.Now)
-    //                 .Select(dt => new ParticipantDTO
-    //                 {
-    //                     UserID = dt.GuildMember.UserID,
-    //                     Username = dt.GuildMember.Username
-    //                 })
-    //                 .ToList()
-    //         })
-    //         .FirstOrDefaultAsync();
-    // }
     
     public async Task<QuestDTO?> GetByIdAsync(Guid id)
     {

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\Mas_Project\\Mas_Project\\Mas_Project.csproj": {}
+    "D:\\Projects\\MAS_Project\\Mas_Project\\Mas_Project.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\Mas_Project\\Mas_Project\\Mas_Project.csproj": {
+    "D:\\Projects\\MAS_Project\\Mas_Project\\Mas_Project.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\Mas_Project\\Mas_Project\\Mas_Project.csproj",
+        "projectUniqueName": "D:\\Projects\\MAS_Project\\Mas_Project\\Mas_Project.csproj",
         "projectName": "Mas_Project",
-        "projectPath": "D:\\Projects\\Mas_Project\\Mas_Project\\Mas_Project.csproj",
+        "projectPath": "D:\\Projects\\MAS_Project\\Mas_Project\\Mas_Project.csproj",
         "packagesPath": "C:\\Users\\maksc\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\Mas_Project\\Mas_Project\\obj\\",
+        "outputPath": "D:\\Projects\\MAS_Project\\Mas_Project\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\maksc\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -14,11 +14,9 @@ public partial class HomePage : Page
     {
         InitializeComponent();
 
-        // Get ViewModel from DI container
         _viewModel = App.ServiceProvider.GetRequiredService<QuestBoardViewModel>();
         DataContext = _viewModel;
 
-        // Load data
         _viewModel.LoadBoardsAsync();
     }
 

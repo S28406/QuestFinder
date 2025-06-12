@@ -47,7 +47,6 @@ public partial class QuestList : Page
     
     private void RankFilter_Click(object sender, RoutedEventArgs e)
     {
-        // Toggle ComboBox visibility
         RankComboBox.Visibility = RankComboBox.Visibility == Visibility.Visible
             ? Visibility.Collapsed
             : Visibility.Visible;
