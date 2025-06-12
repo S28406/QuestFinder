@@ -42,8 +42,6 @@ public class GuildMemberService
         member.Result.MemberRoles.Add(memberRole);
     }
     
-    
-    
     public async Task AssignQuestToMemberAsync(Guid memberId, Quest quest)
     {
         var member = await _memberRepo.GetByIdAsync(memberId);
